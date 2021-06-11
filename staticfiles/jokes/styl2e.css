@@ -1,0 +1,275 @@
+.card-wrapper{
+ color:red;
+ border:3px solid #0a4d9b;
+ display:-webkit-box;
+ display:flex;
+ -webkit-box-orient:vertical;
+ -webkit-box-direction:normal;
+ flex-direction:column
+ background: rgba(0, 0, 0, .5);
+ height:305px
+}
+
+.entry-header {
+ align-content:center;
+ -webkit-box-align:center;
+ align-items:center;
+ background:#0a4d9b;
+ color:#fff;
+ display:-webkit-box;
+ display:flex;
+ height:45px;
+ -webkit-box-pack:start;
+ justify-content:flex-start;
+ padding:5px 14px
+}
+
+.hidden {
+ display:none;
+}
+.hiddenn {
+ display:none;
+}
+.revealed {
+	display:none;}
+.realed {
+	display:none}
+	
+.entry-content {
+ display:-webkit-box;
+ display:flex;
+ -webkit-box-orient:vertical;
+ -webkit-box-direction:normal;
+ flex-direction:column;
+ -webkit-box-flex:1;
+ flex-grow:1;
+ padding:8px 14px;
+ margin:0;
+ min-height:140px
+}
+
+.content-wrapper {
+ width:100%;
+ margin:40px auto 0;
+ display:-webkit-box;
+ display:flex;
+ -webkit-box-align:center;
+ align-items:center;
+ max-width:1220px
+}
+
+
+.fixed-height {
+ height:305px
+}
+.div1 {
+  width: 300px;
+  height: 100px;
+  border: 1px solid black;
+  color:black;
+  background: rgba(0, 0, 0, .5);
+}
+
+.div2 {
+  width: 300px;
+  height: 100px;  
+  border: 1px solid red;
+}
+
+
+.flex-parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  padding:20px;
+  padding:50px;
+  
+}
+
+.section {
+height:1px;
+margin=1000px 0px 0px;
+}
+
+.article {
+
+  align-items:center;
+  margin:20px auto 30px;
+/*  margin:40px auto 0;*/
+    margin:auto auto;
+  padding:20px;
+  
+/*  height:305px;
+  width:305px;*/
+  float:left;
+  width:30%;
+}
+
+
+/*.fixed-width{width:25%;}*/
+.title-header{
+  /*margin:40px auto 20;*/
+  margin:0px auto 0;
+  background:#ff00ff;
+  color:#fff;
+  align-items:center;
+  width:305px;
+  font-family: 'Brush Script MT',cursive;
+  font-size: 26px;
+}
+
+.content{
+  /*color:white;*/
+  border:3px solid #ff33ff;
+  width:305px;
+  margin:0px auto 0;/* Seperation between two boxes (Margin from Flex parent)*/
+  padding:35px; /* Seperation between box and content */
+  line-height: 1.4; /*Seperation between two lines upper and down*/
+  display: flex;
+  position:relative;
+  }
+
+
+.box {
+  background-color: blue;
+  margin: 20px;
+  padding: 20px;
+  color:white;
+}
+
+.dark-mode {
+  background-color: #18191A;
+  color: white;
+  
+  /*
+  Facebook dark mode colors:heading:#242526, #18191A(General)
+  W3school dark mode colors:#282C34(main), #616161 (vertical/horizintal Lines)*/
+}
+
+
+
+
+
+
+
+
+
+
+
+/* <For dark mode switch: >*/
+.switch {
+  position: relative;
+  align:right;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+/* </For dark mode switch> */
+
+/* <For dark mode button> */
+/*#more {display: none;}
+.read-more-btn {
+ background-color:transparent;
+ border:1px solid #FF00FF;
+ color:#e600e6;
+ font-size:12px;
+ font-weight:500;
+ padding:8px 18px;
+ text-transform:uppercase
+}*/
+
+/*#more {display: none;}*/
+.read-more-btn {
+  /* Parent position: relative; */
+  display: block;
+  position: absolute;
+  bottom: 0px;
+  background-color: transparent#ff80df;
+  color: black;
+/*  border:1px solid #0a4d9b;
+  color:#0a4d9b;*/
+  align:center;
+  font-size:12px;
+  font-family: serif; 
+  font-weight:900;
+  text-transform:uppercase;
+  background:#ff00ff;
+  color:#fff;
+  
+  /* If first font-family dose not load, browser automatically loads the second colour. */
+  font-family: serif, "cursive", "Brush Script MT",serif, "Tahoma", "Verdana", sans-serif; 
+  padding: 10px;
+  
+  margin: 0px 70px;
+  margin : 0 center;
+  border-radius: 25px;/*For round corners*/
+}
+
+/* </For dark mode button> */
+
+
+
+
+
+/*For Responsive Web Page*/
+/* Use a media query to add a break point at 620px: */
+@media screen and (max-width:1175px) {
+  /* For mobile phones: */
+  .article  {
+    width:100%;
+  }
+

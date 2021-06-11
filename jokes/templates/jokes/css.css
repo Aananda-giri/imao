@@ -1,0 +1,12 @@
+.chipps{
+color:green;
+background-color:#F2F2F2;
+/*overflow:auto;*/
+border: 1px solid black;
+}
+
+.chipps:hover{
+color:black;
+background:#E5E5E5;
+/*border:2px solid black;*/
+}

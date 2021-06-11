@@ -1,0 +1,44 @@
+from jokes.models import Comments,WockaJokes
+from user.models import User
+
+#To create
+HerComments.objects.create(body='I want Her',wockajokes_id=1,user_id='she')
+
+u=User.objects.get(username='Prunika')
+j=WockaJokes.objects.get(id=1)
+
+#To view
+u.purnikacomments_set.all()
+j.purnikacomments_set.all()
+
+#Alternative way to create
+u.purnikacomments_set.create(body='I want Her',herjoke_id=1)
+u.save()
+u.purnikacomments_set.create(body='I want Her',herjoke_id=1)
+
+#POSTGRES
+delete from table where id=1;//To delete row in postgrese
+ALTER TABLE table_name 
+RENAME COLUMN column_name TO new_column_name;
+
+
+WockaJokes.objects.get( user__username=UsuarioElegido )
+WockaJokes.objects.get( title__username=UsuarioElegido )
+
+
+##For sending message By render
+
+    jokes.views:
+    from django.contrib import messages
+    messages.add_message(request, messages.INFO, "Your Message")
+    return redirect(memeview)
+
+    memes.index.html
+        message:{{messages}}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}

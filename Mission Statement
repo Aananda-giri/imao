@@ -1,0 +1,48 @@
+<!-- Revolutionize login with randomly generated username and password, with email verification user can choose custom username-->
+
+<!-- improve memes displaying/view style / reference instagram images -->
+
+<!-- Make new url for each joke for better sitemap and SEO -->
+
+<!-- Discussion Forum -->
+
+1. Password Reset page - link through mail/phone_no.
+
+2. Shorting algorithm, Search real time feed, Search min_words = 2 ,indexing,Viewed jokes ['add viewed ids in user db'||'add viewed ids in joke db']
+        joke_db:Advantaege: 
+        user_db:Advantage:  
+        short_algorithm:Optimise db for sorting instead of retriving data to user_model and calculating
+
+3. Sediuctive view [jokes, memes] (Neat mobile-friendly view), beautiful icons [reactjs, Bootstrap]
+
+4. Discussion Form
+
+5. Auto scrap Jokes/Memes from books,websites(github), printest, reddit, quora, facebook-groups
+
+# Admin Page For managing Everything
+# Write Tests
+# merge yo momma and yo mama categories
+
+
+Required:
+#Javascript to bold and coloured circle[Green/white] user/pre_home_page.html for checked values
+
+#Improve user/models.py User:line 27 phone_number :BigintegerField ehich goes from  -9223372036854775808 to 9223372036854775807 while typical phone number is of Max. 10 digits & Max. 15 digits with country code
+
+#
+
+# [Foreign_key/onto_one_key] in user/models.py line 17 : username with user login information
+
+
+
+
+
+
+#///////////////////###########################\\\\\\\\\\\\\\\\\\\\\\\
+#///////////////////***************************\\\\\\\\\\\\\\\\\\\\\\\
+#////////////********         ERRORS:          *********\\\\\\\\\\\\\\
+#/////////////******** all From wocka jokes:    *********\\\\\\\\\\\\\
+#\\\\\\\\\\\\\\\\\\\\****************************/////////////////////
+#\\\\\\\\\\\\\\\\\\\\############################/////////////////////
+
+*stored few jokes twice

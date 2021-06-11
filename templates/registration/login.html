@@ -1,0 +1,52 @@
+
+
+<!-- Registration Form 
+<h2>Register</h2>
+<form method="post" action='register' enctype="multipart/form-data">
+  <button type="submit">Register</button>
+</form>-->
+
+
+
+
+
+<!--#For Registration-->
+{% if authtype == "/Register/" %}
+<!--<form action={{authtype}} method="POST">-->
+
+<form method="POST">
+  {% csrf_token %}
+
+Username:<input id="username" type="text" name="username" value=""><br>
+
+<!--She is waiting!-->
+
+Email:&emsp;&emsp; <input id="email" type="text" name="email" value=""><br>
+Password:<input id="password" type="text" name="password" value="">
+<input type="submit" value="OK">
+</form>
+
+
+{% if ErrorMessage %}
+<h3>{{ ErrorMessage }}</h3>
+{% endif %}
+
+{% if RegisterErrorMessage %}
+{{RegisterErrorMessage}}
+feed:{{feed}}
+{% endif %}
+
+
+{% else %}
+<!-- templates/registration/login.html -->
+
+<!-- Login Form -->
+<h2>Log In</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Log In</button>
+</form>
+
+<a href="/register/">Don't have account?</a>
+{% endif %}

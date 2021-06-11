@@ -1,0 +1,51 @@
+<!--Welcome to memes Home:<br>
+-We have everythng you can ever want from a meme website.-->
+
+{% load static %}
+<style>
+.img{
+max-height:500px;
+max-width:500px;
+.vote{}
+}
+</style>
+{% if memes_list %}
+{% for meme in memes_list %}
+<!--<br>meme.title:
+{{meme.title}}
+real_meme:{{meme}}
+<br>
+From DB:{{meme.src}}-->
+<img class='img' src={{meme.url}} height=1000 width=500 alt='purnika' style="float:right;width:400px;height:500px;">
+<img class='img' src={% static meme%} height=1000 width=500 alt='purnika' style="float:right;width:400px;height:500px;">
+<br>
+<!--meme:{{meme}}<br>
+meme.id:{{meme.id}}<br>
+meme.pub_date:{{meme.pub_date}}<br>-->
+    {% endfor %}
+    {% endif %}
+<br><br>
+<img class='img' src={% static 'memes/images/purnika.png' height=100 width=50 alt='purnika' %}>
+<img src='purnika.png'>
+
+<!--<a href='http://127.0.0.1:8000/memes/'><button>memes</button></a>-->
+
+
+
+<!--
+<a href='https://www.google.com'><img class='img' src={% static 'memes/images/purnika.png' height=100 width=50 alt='purnika' %}></a>
+<div class = 'vote'>
+<img class='img' src={% static 'polls/images/purnika.jpeg' alt='purnika' %}></div>
+{% block content %}{% endblock %}-->
+
+
+
+
+<!-- from index.html-->
+Welcome!
+<!--Welcome, From Memes!!-->
+<form action="/memes/u/" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+{{ upload_form }}
+<input type="submit" value="her memes Submit">
+</form>

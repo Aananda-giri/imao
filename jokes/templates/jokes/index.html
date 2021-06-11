@@ -1,0 +1,759 @@
+<!--For search icon-->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Largest collection of best jokes on the internet</title>
+<meta name="description"  content="Largest collection of over 15,000 funniest jokes you have ever read neatly categorized in over 25 categories">
+
+<!-- For Google Search Console -->
+<meta name="google-site-verification" content="B3UpNAzKeG7ioT5yzNsbyQBGv9aXiBRHYC1f50Veals" />
+
+<!-- For Bing Webmaster -->
+<meta name="msvalidate.01" content="796C5390EDBEB82180F4A5850D7F73C8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- /search2-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<!-- For accesssing css in django-->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'jokes/style.css' %}">
+
+<!--   For bootstrap   -->
+<link rel="stylesheet" type="text/css" href="{% static 'jokes/bootstrap.min.css' %}">
+
+<!--for google font Aladin:-->
+<link href='https://fonts.googleapis.com/css?family=Aladin' rel='stylesheet'>
+
+<script src="{% static 'jokes/script.js' %}"></script>
+
+<!-- For dark mode & making website responsive (mobile-friendly) -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+<!-- For jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style>
+body {  background-color: white;color:red;
+    font-family: 'Aladin';font-size: 26px;
+    <!--HTML font: font-family: 'Brush Script MT',cursive;font-size: 26px;-->}
+
+.dark-mode {
+  background-color: #18191A;/*<!--For dark mode. background co;or of heading:#242526-->*/
+  color: white;
+}
+
+/* For Clickable categories */
+.GFG { 
+  background-color: white; 
+  border: 2px solid black; 
+  background-color: white;
+  color:green;
+  padding: 5px 10px; 
+  text-align: center; 
+  display: inline-block; 
+  font-size: 20px; 
+  margin: 10px 10px; 
+  cursor: pointer; 
+} 
+
+</style>
+</head>
+<body>
+<!--/*############### For floating add joke btton ####################*/-->
+<div id="add_button" class="menu-add float" onClick="CreateJoke()">
+  <a href="#" class="float">
+    <i class="fa fa-plus my-float"></i>
+  </a>
+</div>
+<br>
+
+<form id="upload_form" method="post" action="/jokes/uploadJokeView/" class="hidden">
+{% csrf_token %}
+{{ form.as_p }}
+<input type='submit' value='save' />
+</form>
+
+
+<!--#################- Navigation Bar -###########################-->
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <a class="navbar-brand" href="/cos/"> <img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/RkaVBmn.gif" width="50"><!--<img class="img-fluid img-responsive rounded-circle mr-2" src="https://us.123rf.com/450wm/mishgan/mishgan1901/mishgan190100063/114824766-modern-glowing-blue-and-red-cosmic-concept-yin-and-yang-mandala-colorful-ornamental-spiritual-relaxa.jpg?ver=6" width="50"><img class="img-fluid img-responsive rounded-circle mr-2" src="https://ambikacollins.files.wordpress.com/2015/05/yin-yang-shutterstock.jpg?w=300&amp;h=300" width="50"><img class="img-fluid img-responsive rounded-circle mr-2" src="https://cache.desktopnexus.com/thumbseg/1798/1798169-bigthumbnail.jpg" width="50">-->    <!--Always expand-->
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExample02">
+    <ul class="navbar-nav mr-auto">
+      <!--<li class="nav-item active">
+        <a class="nav-link" href="/index/">Home <span class="sr-only">(current)</span></a>
+      </li>--
+      <li class="nav-item">
+        <a class="nav-link" href="/chit-chat/">Chat</a>
+      </li>-->
+
+      <li class="nav-item">
+        <a class="nav-link active" href="feedback/" style="color:lime;"><b>feedback</b></a>
+      </li>
+        
+      {% if logged_in %}
+        <li class="nav-item">
+          <a class="nav-link" href="/logout/">LogOut</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link active" href="/login/">LogIn</a>
+        </li>
+      {% endif %}
+
+      <!--<li class="nav-item">
+        <a class="nav-link" href="#">{{total_jokes}}</a>
+      </li>-->
+      <li class="nav-item">
+        <a class="nav-link active" href="/">Memes</a>
+      </li>            
+            <!--<li class="nav-item">
+        <a class="nav-link" href="/chit-chat/">Register</a>
+      </li>-->
+    </ul>
+    
+    <form class="form-inline my-2 my-md-0" action="/jokes/" method="POST">
+      {% csrf_token %}
+      <input class="form-control" type="text" placeholder="Search" name="search_term">
+    </form>
+  </div>
+</nav>
+<!-- ############################################################### -->
+
+
+<!-- Select categories Nice Error->
+<form id="formName" method='POST' action='/index/' method="get">
+{% csrf_token %}
+{% for category in categories %}
+<lable style="background-color: white;border: 2px solid black;color: green;padding: 5px 10px;text-align: center;display: inline-block;font-size: 20px;margin: 10px 10px;cursor: pointer;">
+
+<input type ="checkbox" name="category" value = "{{category}}" onchange="document.getElementById('formName').submit()">{{category}}</input>
+</lable>
+{% endfor %}-->
+
+
+
+<!-- #######################- Categories -########################### -->
+<!--<div class="container-fluid">
+  <div class="row">
+    
+    <div class="col-8">
+      <button class="collapsible" style="font-size:2vw;">Categories</button>
+      <div class="collapsable_content" style="background-color:#18191A">
+
+
+      <!-- sends Selected categories--><!--
+      <form id="categorySendForm" method='POST' name="{{category}}" action='/index/'>
+      {% csrf_token %}
+      {% for each_category in categories %}
+        
+      <div class='GFG'><!--  for nice look--><!--
+      <label><!-- To make checkbox text clickable--><!--
+      <input type ="checkbox" name="category" value = "{{each_category}}" style="opacity:0;" onchange="document.getElementById('categorySendForm').submit();/*var catt={{each_category}}*/">{{each_category}}</input>
+      </div>
+      </label>
+      {% endfor %}
+      </form>
+
+      </div>
+    </div>
+
+    <div class="col-2"><!--<li class="nav-item">--><!--
+        <a class="nav-link active" href="/feedback/" style="color:white;background-color:#777777;"><b>feedback</b></a>
+        
+    </div>
+
+    <div class="col-2">
+
+      <!--Dark mode toggle switch:--><!--
+      <label class="switch">
+      <input type="checkbox" onchange="darkFunction()" id="theme-switcher">
+      <span class="slider round">Dark_mode</span>
+      </label>
+    </div>
+
+
+</div><br><br>
+</div>
+-->
+
+<!-- ############################################################# -->
+
+
+
+
+
+
+
+<div class="container fluid mt-2">
+  <div class="row">
+    
+    <div class="col-6">
+      <button class="collapsible" style="font-size:2vw;"><b><h4>Categories</b></button>
+      <div class="collapsable_content" style="background-color:#18191A">
+
+
+      <!-- sends Selected categories-->
+      <form id="categorySendForm" method='POST' name="{{category}}" action='/jokes/' class="">
+      {% csrf_token %}
+      {% for each_category in categories %}
+        
+      <div class='GFG'><!--  for nice look-->
+      <label><!-- To make checkbox text clickable-->
+      <input type ="checkbox" name="category" value = "{{each_category}}" style="opacity:0;" onchange="document.getElementById('categorySendForm').submit();/*var catt={{each_category}}*/">{{each_category}}</input>
+      </div>
+      </label>
+      {% endfor %}
+      </form>
+
+      </div>
+    </div>
+
+
+<!--    <span class="col-md-4 bg-dark text-center" ><!--<li class="nav-item">- ->
+        <a class="active feed" href="/jokes/feedback/" style="color:lime"><b><h1>feedback</h1></b></a>
+        
+    </span>-->
+
+    <div class="col-2">
+
+      <!--Dark mode toggle switch:-->
+      <label class="switch">
+      <input type="checkbox" onchange="darkFunction()" id="theme-switcher">
+      <span class="slider round">Dark_mode</span>
+      </label>
+    </div>
+
+
+</div><br><br>
+</div>
+
+
+
+
+<!-- #######################- Joke -################################ -->
+<!--To get data from django-postgre-->
+{% if latest_joke_list %}
+{% for joke in latest_joke_list %}
+
+<!---->
+
+<!-- Setting id for offset for calculating height of the div used while triggering end for loading more jokes -->
+<div id="joke_count_{{forloop.counter}}" class="joke-container">
+<section id="section_{{joke.id}}">
+
+<!--	<article class="article">-->
+
+		
+		<header class="title-header"><h2>{{ joke.title }} </h2></header>
+		<div class="content">
+		  <div id="trunc_{{joke.id}}" class="truncatedDiv"> {{ joke.body|truncatewords:'40' }} </div>
+		  <div id="hidden_{{joke.id}}" class="hiddenDiv" style="display:none"; > {{ joke.body }} </div>
+        
+          <button class="read-more-btn" onClick="readMoreOne({{ joke.id }})">Read More</button>
+          <div class="love-icon" id="love_icon_{{joke.id}}" onClick="Love({{joke.id}})">♡</div>
+		  <div class="comment-icon" onClick="Comment({{joke.id}})">💬<!--comment icon:<svg viewBox="0 0 24 24" height=35 width=35 class="r-4qtqp9 r-yyyyoo r-1xvli5t r-dnmrzs r-bnwqim r-1plcrui r-lrvibr💬🗯️💭💭👁️‍🗨️🗨️ r-1hdv0qi"><g><path d="M14.046 2.242l-4.148-.01h-.002c-4.374 0-7.8 3.427-7.8 7.802 0 4.098 3.186 7.206 7.465 7.37v3.828c0 .108.044.286.12.403.142.225.384.347.632.347.138 0 .277-.038.402-.118.264-.168 6.473-4.14 8.088-5.506 1.902-1.61 3.04-3.97 3.043-6.312v-.017c-.006-4.367-3.43-7.787-7.8-7.788zm3.787 12.972c-1.134.96-4.862 3.405-6.772 4.643V16.67c0-.414-.335-.75-.75-.75h-.396c-3.66 0-6.318-2.476-6.318-5.886 0-3.534 2.768-6.302 6.3-6.302l4.147.01h.002c3.532 0 6.3 2.766 6.302 6.296-.003 1.91-.942 3.844-2.514 5.176z"></path></g></svg>🗨️--></div>
+		</div>
+		
+<!--	</article>-->
+</section><br></div>
+
+<!--
+<div class="container">
+
+  <div class="row">
+    <div class="col">
+    <h2>{{ joke.title }}</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    
+    <div class="col" id="truncatedDiv">
+      {{ joke.body|truncatewords:'40' }}
+    </div>
+    
+    <div class="col" id="hiddenDiv">
+      {{ joke.body }}
+    </div>
+  </div>
+
+</div>
+-->
+<!-- ############################################################# -->
+
+<!-- ###############trigger on scrolling to specific spot############# -->
+<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+var element_position = $('#scroll-to').offset().top;
+
+window.on('scroll', function() {
+    var y_scroll_pos = window.pageYOffset;
+    var scroll_pos_test = element_position;
+
+    if(y_scroll_pos > scroll_pos_test) {
+        alert('I want her')
+    }
+});-->
+
+
+
+
+
+
+
+
+
+
+<!--#####################- Comments -##############################-->
+
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+<!--1                              
+<div class="container mt-5">
+ <div class="row d-flex justify-content-center">
+  <div class="col-md-8">
+            
+   <form action="/index/" method="POST">
+   
+   {% csrf_token %}
+    
+    <input type="checkbox" id="{{joke.id}}" name="joke_id" value="{{joke.id}}" style="opacity:0;/* position:absolute; left:9999px;*/" checked><!--{{joke.id}}-->
+<!--2     
+     <div class="d-flex flex-row add-comment-section mt-4 mb-4"><img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" width="38">
+      
+      <input type="text" name="comment" class="form-control mr-3" placeholder="Add comment">
+      
+      <button action="/index/" class="btn btn-primary" type="submit">Comment
+      </button>
+      
+   </form>
+  </div>
+
+{% for comment in joke.comments_set.all %}
+  <div class="card p-3 mt-2">
+   <div class="d-flex justify-content-between align-items-center">
+    
+    <div class="user d-flex flex-row align-items-center"> <img src="https://i.imgur.com/stD0Q19.jpg" width="30" class="user-img rounded-circle mr-2">
+     
+     <span>
+     <small class="font-weight-bold text-primary">
+     
+     {{ comment.user.username.title }}<!--rashida_jones-->
+<!--3     </small>
+     
+     <small class="font-weight-bold">
+     {{ comment }}
+     <!--{ comment.body }}Really cool Which filter are you using? -->
+<!--3     </small>
+     </span> 
+     
+    </div>
+    
+     <small> <!--{ comment.duration }}--><!--3  3 days ago</small>
+<!--3   </div>
+   
+   <div class="action d-flex justify-content-between mt-2 align-items-center">
+   
+   <div class="reply px-4"> <small>Remove</small> 
+   <span class="dots">   </span> <small>Reply</small> <span class="dots"></span> <small>Translate</small> </div>
+                    <div class="icons align-items-center"> <i class="fa fa-user-plus text-muted"></i> <i class="fa fa-star-o text-muted"></i> <i class="fa fa-check-circle-o check-icon text-primary"></i> </div>
+                </div>
+            </div>
+     <!--<a href='thunder-bird.herokuapp.com'>♥️♡❤️❤️</a>-->
+<!--3{% endfor %}
+        </div>
+    </div>
+</div>
+
+<!--<div class="align-items-center d-flex flex-row add-comment-section mt-4 mb-4">g-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<img class="rounded-circle img-fluid img-responsive" src="https://i.imgur.com/stD0Q19.jpg" alt="profile" width="70"></img>
+
+<form action="/index/" method="POST">
+{% csrf_token %}
+
+ <input type="checkbox" name="joke_id" value="{{joke.id}}" style="opacity:0;/* position:absolute; left:9999px;*/" checked>
+
+  <div class="d-flex flex-row add-comment-section mt-4 mb-4">
+
+   <img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" width="38">
+
+ <input type="text" name="comment" class="form-control mr-3" placeholder="Add comment">
+
+<button action="/index/" class="btn btn-primary" type="submit">
+  Comment
+</button>
+
+</div>
+
+</form>
+
+
+
+
+
+
+</div>
+{% for comment in joke.comments_set.all %}
+<div class="card p-3 mt-2">
+ <div class="d-flex justify-content-between align-items-center">
+    
+  <div class="user d-flex flex-row align-items-center"> 
+    <img src="https://i.imgur.com/stD0Q19.jpg" width="30" class="user-img rounded-circle mr-2">
+     
+   <span>
+     <small class="font-weight-bold text-primary">
+     
+     {{ comment.user.username.title }}<!--rashida_jones
+     </small>
+     
+     <small class="font-weight-bold">
+     {{ comment }}{% endfor %}
+     
+     </small>
+   </span> 
+     
+  </div>
+    
+     <small> 3 days ago</small>
+ </div>
+</div></div>-->
+
+{% endfor %}
+{% endif %}
+
+<!-- For spinner at the end -->
+<div class="spinner-grow text-secondary mx-auto d-block" id="spinner" style="width: 3rem; height: 3rem;" role="status">
+  <span class="visually-hidden"></span>
+</div>
+
+<!--##################################################################-->
+<!--################## Ajax jokes ################################-->
+
+
+
+<!--<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmpexjPO0Y2KsSld1zq42ZJGIIDiQRbqfDQFV46pjsoJUI2JyAVk5gLiHQ3rcwYVyMDYaFUhpL6wA&amp;usqp=CAU" alt="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmpexjPO0Y2KsSld1zq42ZJGIIDiQRbqfDQFV46pjsoJUI2JyAVk5gLiHQ3rcwYVyMDYaFUhpL6wA&amp;usqp=CAU" class="shrinkToFit" width="182" height="228">-->
+category:{{category}}
+
+<!--{% load static %}
+<img src={% static 'memes/images/purnika_shah.jpeg'%} height=100 width=50 alt='purnika' >-->
+
+<script>
+  //readMore();
+  getCategories();
+
+  //For getting new Jokes from ddatabase
+  if (typeof newMax == 'undefined') {
+      var  newMax=15;  // to get max joke_id in the; Counts actual no. of jokes in page.
+  }
+
+  if (typeof newMaxJoke == 'undefined') {
+      var  newMaxJoke=15;  // to get max joke_id which increases by 10 every time whether or not 10 jokes are fetched for avoiding jokes to be repeated because some jokes listed in favourite jokes are not scrapped. which creates gap between two jokes id while increasing id serially. this variable is to be replacae by newMaxs after all jokes are scrapped and added to database.
+  }
+
+  if (typeof temp == 'undefined') {
+    var temp = 0;  // to avoid requesting for same jokes multiple times
+  }
+  
+  $(window).on('scroll', (function() {
+     var hT = $('#'+ 'joke_count_' +(+newMax-3)).offset().top,
+         hH = $('#'+(+newMax-3)).outerHeight(),
+         wH = $(window).height(),
+         wS = $(this).scrollTop();
+     if (wS > (hT+hH-wH) | $(window).scrollTop() + $(window).height() == $(document).height()){
+         //console.log('H1 on the view!');
+         //To get new jokes
+         //getJokes();
+           
+           if (temp < newMaxJoke){
+           
+           temp = newMaxJoke;
+           category = document.getElementById("categorySendForm").name;
+           
+           $.ajax({
+             type: 'GET',
+             url: "{% url 'get_jokes' %}",
+             data: {"last_joke_id": newMaxJoke, 'category':category},
+             success: function (response) {
+                  // if not valid user, alert the user
+                  //alert("What is this?");
+                  /*if(!response["valid"]){
+                      alert("You cannot create a friend with same nick name");
+                      var nickName = $("#id_nick_name");
+                      nickName.val("")
+                      nickName.focus()
+    
+                  }*/
+    //if (JSON.parse(response["repeat"])==true) console.log('trrrrue')
+
+
+                  var instance = JSON.parse(response["jokes"]);
+                  //console.log(instance)
+                  var jokes = instance[0]["fields"];
+                  //console.log();
+                  //console.log(jokes);
+                  for (i=0;i<instance.length;i++){
+                    //console.log('length' + instance.length)
+                    newMax += 1;
+                    //console.log("\n\n\n newMax : "+newMax);
+                    //readMore();
+                    //console.log(instance[i]['fields']['title']);
+                    //############### Nested divs Here ########################
+                    //console.log('\n\n\n\n\nsend:'+newMax);
+                    //console.log('\nsent:' + instance[i]['pk']);
+                    appendJoke(title=instance[i]['fields']['title'], truncatedContent=instance[i]['fields']['body'].substring(0,250),fullContent=instance[i]['fields']['body'], jokeId=instance[i]['pk'], newMax=newMax);
+                  
+                  appendSpinner();//To add spinner at the end
+
+              } newMaxJoke += 10;
+              
+              let allJokes = document.querySelectorAll('.joke-container')
+              let mini = allJokes[0].id
+              let maxi = allJokes[allJokes.length-1].id
+              
+              if (allJokes.length > 50){
+                //For keeping only first 50 jokes on screen at a time.
+                for  (let i = allJokes.length-51; i >= 0; i--){
+                  document.body.removeChild(allJokes[i]);
+                  //allJokes[i].remove();
+                }
+              }
+              
+              //For removing previous 50 memes
+            /*for (i of document.querySelectorAll('.joke-container')){
+              if (i.firstElementChild.id < newMax-50 && newMax >= 100){
+                i.remove();
+              }}*/
+  
+          },            error: function (response) {
+                  console.log(response)
+              }
+          
+          
+     })}
+         
+         }}))
+         
+         
+
+var Love = function (jokeId=0){
+  //var loves = document.getElementsByClassName("love-icon");
+  //var i;
+  console.log('Loving:'+jokeId);
+  //for (i=0; i < loves.length; i++ ){
+    //love[i].addEventListener("click", function() {alert('I want Her');}
+    
+    var jokeDiv = document.getElementById(jokeId);
+      //console.log('div : '+ jokeDiv.id);
+      //loveIcon = jokeDiv.querySelector('.love-icon');
+      
+      
+      loveIcon = document.getElementById('love_icon_'+jokeId)
+      
+    //loveIcon.onclick = function(){
+      
+      //console.log(loveIcon);
+      //var loveIcon = testContainer.querySelector(.String(jokeId));
+      if(loveIcon.textContent == '♥️')
+        {loveIcon.textContent='♡';
+        //console.log('ajax unvote id:'+jokeId);
+        /*Code for like*/
+        var vote = '';
+      }
+      else
+        {loveIcon.textContent='♥️';
+        console.log('Ajax vote Id:' + jokeId);
+        var vote = true;}
+      
+      category = document.getElementById("categorySendForm").name;
+      $.ajax({
+         type: 'get',
+         url: "{% url 'vote' %}",
+         data: {"joke_id": jokeId, 'vote':vote, 'category':String(category)},
+         success: function (response) {
+         //var instance = JSON.parse(response["message"]);               
+         console.log(response['message']);
+         //console.log('category: '+String(category))
+         }, error: function (response) {
+                  console.log(response)
+              }
+          
+          
+      } )
+ 
+    
+  
+};
+
+function Comment(id){
+ //To hide comment section if comment icon is clicked twice
+  comment_section = document.getElementById('comment_main_' + id);
+  if (comment_section != null){
+    if (comment_section.style.display!='none'){
+      comment_section.setAttribute("style", 'display:none;');
+      //To hide comment section on pressong comment button twice
+    } else {
+      comment_section.setAttribute("style", 'display:block;');
+      //To show hidden comment section on pressong comment button thrice
+    }
+  } else {
+      
+      // To create comment section if it is not created already
+      commentingBox(id);   // To display commenting box
+      getComments(id);     // To get & display display comments
+  }
+
+
+
+}
+
+
+function getComments(id) {
+  
+
+  
+
+  
+  //Ajax to get all comments
+  $.ajax({
+    
+    type:'GET',
+    url:"{% url 'comments' %}",
+    data: {'joke_id':id},
+    success: function(response) {
+    
+    //To delete previous comments to replace with updated list of comments
+    let commentCard = document.getElementById('comment_main_' + id).querySelector('.display-comments')
+    if (commentCard!==null){
+    commentCard.remove();
+    }
+    
+    
+    var instance = JSON.parse(response["comments"]);
+    
+    comments=[]
+    try{
+    for (i=0; i<instance.length; i++) {
+    comments.push(instance[i].fields.body)
+    //console.log(instance[i].fields.body);
+    //return 'hello';
+    }
+    //console.log(instance);
+    
+    user = instance[0].fields.user
+    
+    //console.log(user)
+    console.log(comments)
+    AppendComment(id, comments, user);
+    //console.log('instance[0]: ' + instance[0].fields.body + 'instance.length: '+instance.length)
+    
+    //var jokes = instance[0]["fields"];
+    
+    } catch(err) {
+      
+      //AppendComment(id);
+      }
+    //console.log('her');
+    
+    }, error: function (response) {
+         console.log(response);
+         //return 'her';
+       }
+    
+  })
+  //console.log($.ajax['success'])
+  //console.log(all_comments);
+  //return all_comments;
+}
+
+
+function submitComment(id) {
+  if (typeof(category)==='undefined'){
+  var category='none';
+  }
+  comment = document.getElementById('comment_' + id).value;
+  console.log('comment:'+comment + '  id:' +id);
+  $.ajax({
+    type:'POST',
+    url:"{% url 'savecomment' %}",
+    data: {
+      'joke_id':id,
+      'comment':comment, csrfmiddlewaretoken: '{{ csrf_token }}',
+      'category':String(category),
+      
+    },
+    
+    success: function(response) {
+    
+
+    
+    // Clearing comment form after submission
+    document.getElementById('comment_' + id).value='';
+    console.log('comment sent');
+
+    //document.getElementById("comment_main_" + id).remove();
+    
+
+    
+    getComments(id);
+    
+    
+    }, error: function (response) {
+         console.log(response);
+         return 'her';
+       }
+    
+  })
+}
+</script>
+
+
+  </body>
+</html>

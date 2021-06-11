@@ -1,0 +1,380 @@
+<!-- Revolutionize login with randomly generated username and password, with email verification user can choose custom username-->
+<!-- improve memes displaying/view style => reference instagram images -->
+<!-- Add https and sitemap-->
+<!--For search icon-->
+<!DOCTYPE html>
+<html>
+<head>
+<title> Best collection of memes on the internet</title>
+<meta name="description"  content="Largest collection of over 100,000 funniest memes you have ever seen">
+
+<!-- For Bing Webmaster -->
+<meta name="msvalidate.01" content="796C5390EDBEB82180F4A5850D7F73C8" />
+
+<!--   For bootstrap   -->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'jokes/bootstrap.min.css' %}">
+
+<!--   For css   -->
+<link rel="stylesheet" type="text/css" href="{% static 'memes/style.css' %}">
+
+<!--   For javascript   -->
+<script src="{% static 'memes/script.js' %}"></script>
+
+<!-- For Google Search Console -->
+<meta name="google-site-verification" content="B3UpNAzKeG7ioT5yzNsbyQBGv9aXiBRHYC1f50Veals" />
+
+</head>
+
+<body>
+
+
+
+
+<!--#################- Navigation Bar -###########################-->
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <a class="navbar-brand" href="/chit-chat/main/"> <img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/RkaVBmn.gif" width="50"><!--<img class="img-fluid img-responsive rounded-circle mr-2" src="https://us.123rf.com/450wm/mishgan/mishgan1901/mishgan190100063/114824766-modern-glowing-blue-and-red-cosmic-concept-yin-and-yang-mandala-colorful-ornamental-spiritual-relaxa.jpg?ver=6" width="50"><img class="img-fluid img-responsive rounded-circle mr-2" src="https://ambikacollins.files.wordpress.com/2015/05/yin-yang-shutterstock.jpg?w=300&amp;h=300" width="50"><img class="img-fluid img-responsive rounded-circle mr-2" src="https://cache.desktopnexus.com/thumbseg/1798/1798169-bigthumbnail.jpg" width="50">-->    <!--Always expand-->
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExample02">
+    <ul class="navbar-nav mr-auto">
+      <!--<li class="nav-item active">
+        <a class="nav-link" href="/index/">Home <span class="sr-only">(current)</span></a>
+      </li>--
+      <li class="nav-item">
+        <a class="nav-link" href="/chit-chat/">Chat</a>
+      </li>-->
+      <li class="nav-item">
+        <a class="nav-link active" href="feedbacks/" style="color:lime;"><strong><h5>Feedbacks</h5></strong></a>
+      </li>
+
+      {% if logged_in %}
+        <li class="nav-item">
+          <a class="nav-link" href="/logout/"><b>LogOut</b></a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link active" href="/login/"><b>LogIn</b></a>
+        </li>
+      {% endif %}
+      <!--<li class="nav-item">
+        <a class="nav-link active" href="/feedback/"><b>feedback</b></a>
+        </li>-->
+      <!--<li class="nav-item">
+        <a class="nav-link" href="#">{{total_jokes}}</a>
+      </li>-->
+      <li class="nav-item">
+        <a class="nav-link active" href="/jokes/"><b>Jokes</b></a>
+      </li>
+
+            <!--<li class="nav-item">
+        <a class="nav-link" href="/chit-chat/">Register</a>
+      </li>-->
+    </ul>
+    <!--<form class="form-inline my-2 my-md-0" action="/index/" method="POST">
+      {% csrf_token %}
+      <input class="form-control" type="text" placeholder="Search" name="search_term">
+    </form>-->
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+{% if memes_list %}
+{% for meme in memes_list%}
+<!-- #######################- Joke -################################ -->
+<!--To get data from django-postgre-->
+
+
+		<div id={{meme.id}} class="text-center">
+          <img src={{meme.imgflip_url}} class = "rounded" alt='meme' loading="lazy">
+          <div class="d-flex mr-1">
+            <div class="love-icon mx-auto d-block" onClick="Love({{meme.id}})">♡</div>
+		    <div class="comment-icon mx-auto d-block" onClick="Comment({{meme.id}})"> 💬 </div>
+		  </div>
+		</div>
+
+{% endfor %}
+{% endif %}
+
+<div class="spinner-grow text-secondary mx-auto d-block" id="spinner" style="width: 3rem; height: 3rem;" role="status">
+  <span class="visually-hidden"></span>
+</div>
+
+
+
+<form action="" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+{{ upload_form }}
+<input type="submit" value="Submit">
+</form>
+
+<!-- For jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+
+
+  //For getting new memes from views
+  if (typeof newMax == 'undefined') {
+      var  newMax=15;  // to get max joke_id in the
+  }
+
+
+  if (typeof temp == 'undefined') {
+    var temp = 0;  // to avoid requesting for same jokes multiple times
+  }
+  
+  $(window).on('scroll', (function() {
+     var hT = $('#'+(+newMax-15)).offset().top,/* For trigring when 15 memes are left at end */
+         hH = $('#'+(+newMax-15)).outerHeight(),
+         wH = $(window).height(),
+         wS = $(this).scrollTop();
+     if (wS > (hT+hH-wH) | $(window).scrollTop() + $(window).height() == $(document).height()){
+         //console.log('H1 on the view!');
+         //To get new jokes
+         //getJokes();
+           
+          if (temp < newMax){
+           
+           
+           temp = newMax;
+           //console.log('sending newmax:' + newMax);
+           $.ajax({
+             type: 'GET',
+             url: "{% url 'get_memes' %}",
+             data: {"last_meme_id": newMax,},
+             success: function (response) {
+             
+             var memes = JSON.parse(response["memes_list"]);
+             
+             console.log(memes);
+             //console.log(memes[0]['imgflip_url']);
+             for (meme of memes){
+             //console.log(meme);
+             
+             //console.log(meme['id'], meme['imgflip_url'], meme['imgflip_title'])
+             AppendMeme(meme['id'], meme['imgflip_url'], meme['imgflip_title']);
+             
+             }
+             newMax += 50;  //console.log(newMax)
+             
+             appendSpinner();//To add spinner at the end
+             
+             //For removing previous 50 memes
+            for (i of document.querySelectorAll('.text-center')){
+              if (i.id < newMax-50 && newMax>65){
+                i.remove();
+              }}
+             
+             
+             },
+             error: function (response) {
+                  console.log('AJAX error response:')
+                  console.log(response)
+              }})
+        
+        }}}))
+
+
+
+
+
+
+
+
+
+
+
+/*
+function Love(id){
+  console.log('loving' + id);
+}
+
+function Comment(id){
+  console.log('Commenting' + id);
+}*/
+
+
+
+var Love = function (id=0){
+  //var loves = document.getElementsByClassName("love-icon");
+  //var i;
+  //console.log('Loving:'+jokeId);
+  //for (i=0; i < loves.length; i++ ){
+    //love[i].addEventListener("click", function() {alert('I want Her');}
+    
+    var memeDiv = document.getElementById(id);
+      //console.log('div : '+ jokeDiv.id);
+      loveIcon = memeDiv.querySelector('.love-icon');
+    //loveIcon.onclick = function(){
+      
+      
+      //var loveIcon = testContainer.querySelector(.String(jokeId));
+      if(loveIcon.textContent == '♥️')
+        {loveIcon.textContent='♡';
+        //console.log('ajax unvote id:'+jokeId);
+        /*Code for like*/
+        var vote = '';
+      }
+      else
+        {loveIcon.textContent='♥️';
+        console.log('Ajax vote Id:' + id);
+        var vote = true;}
+      
+      $.ajax({
+         type: 'GET',
+         url: "{% url 'vote_meme' %}",
+         data: {"meme_id": id, 'vote':vote,},
+         success: function (response) {
+         //var instance = JSON.parse(response["message"]);               
+         if (vote){console.log('voting id: ' +id);}
+         else {console.log('un_voting id: ' +id);}
+         console.log(response['message']);
+         //console.log('category: '+String(category))
+         }, error: function (response) {
+                  console.log(response)
+              }
+          
+          
+      } )
+ 
+    
+  
+};
+
+function Comment(id){
+ //To hide comment section if comment icon is clicked twice
+  comment_section = document.getElementById('comment_main_' + id);
+  if (comment_section != null){
+    if (comment_section.style.display!='none'){
+      comment_section.setAttribute("style", 'display:none;');
+      //To hide comment section on pressong comment button twice
+    } else {
+      comment_section.setAttribute("style", 'display:block;');
+      //To show hidden comment section on pressong comment button thrice
+    }
+  } else {
+      // To create comment section if it is not created already
+      commentingBox(id);   // To display commenting box
+      getComments(id);     // To get & display display comments
+  }
+
+
+
+}
+
+
+function getComments(id) {
+  
+
+  
+
+  
+  //Ajax to get all comments
+  $.ajax({
+    
+    type:'GET',
+    url:"{% url 'meme_comments' %}",
+    data: {'meme_id':id},
+    success: function(response) {
+    
+    //To delete previous comments to replace with updated list of comments
+    let commentCard = document.getElementById('comment_main_' + id).querySelector('.display-comments')
+    if (commentCard!==null){
+    commentCard.remove();
+    }
+    
+    
+    var instance = JSON.parse(response["comments"]);
+    
+    comments=[]
+    try{
+    for (i=0; i<instance.length; i++) {
+    comments.push(instance[i].fields.body)
+    //console.log(instance[i].fields.body);
+    //return 'hello';
+    }
+    //console.log(instance);
+    
+    user = instance[0].fields.user
+    
+    //console.log(user)
+    console.log(comments)
+    AppendComment(id, comments, user);
+    //console.log('instance[0]: ' + instance[0].fields.body + 'instance.length: '+instance.length)
+    
+    //var jokes = instance[0]["fields"];
+    
+    } catch(err) {
+      
+      //AppendComment(id);
+      }
+    //console.log('her');
+    
+    }, error: function (response) {
+         console.log(response);
+         //return 'her';
+       }
+    
+  })
+  //console.log($.ajax['success'])
+  //console.log(all_comments);
+  //return all_comments;
+}
+
+
+function submitComment(id) {
+  if (typeof(category)==='undefined'){
+  var category='none';
+  }
+  comment = document.getElementById('comment_' + id).value;
+  console.log('comment:'+comment + '  id:' +id);
+  $.ajax({
+    type:'POST',
+    url:"{% url 'save_meme_comment' %}",
+    data: {
+      'meme_id':id,
+      'comment':comment, csrfmiddlewaretoken: '{{ csrf_token }}',
+      'category':String(category),
+      
+    },
+    
+    success: function(response) {
+    
+    // Clearing comment form after submission
+    document.getElementById('comment_' + id).value='';
+    console.log('comment sent');
+
+    //document.getElementById("comment_main_" + id).remove();
+    
+
+    
+    getComments(id);
+    
+    
+    }, error: function (response) {
+         console.log(response);
+         return 'her';
+       }
+    
+  })
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+Welcome!<br>
+<!--Welcome, From Memes!!-->
+{% if display_type == "/Upload/" %}
+<form action="" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form }}
+<input type="submit" value="Submit">
+</form>
+{% else %}
+
+{% load static %}
+<img class='img' src={% static profile_pic%} height=1000 width=500 alt='purnika' style="float:right;width:400px;height:500px;">
+    
+    {% if user %}
+
+    Username: {{ user.username }}
+    First_name: {{ user.first_name }}
+    Middle_name: {{ user.middle_name }}
+    Last_name: {{ user.last_name }}
+    email: {{ user.email }} 
+    Phone_number: {{ user.phone_number }} 
+    Relligion: {{ user.relligion }}
+    
+    {% endif %}
+{% endif %}

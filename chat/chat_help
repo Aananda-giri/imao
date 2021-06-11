@@ -1,0 +1,11 @@
+##############To start redis on port 6397 ############################
+redis-server --port 6379
+
+###############- To install channels_redis -##########################
+python3 -m pip install channels_redis
+
+####################- To install selenium -###########################
+python3 -m pip install selenium
+
+######################- To run tests -################################
+python3 manage.py test chat.tests

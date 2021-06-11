@@ -1,0 +1,368 @@
+<!--For search icon-->
+<!DOCTYPE html>
+<html>
+<head>
+<title>imao Jokes</title>
+<!-- For Google Search Console -->
+<meta name="google-site-verification" content="B3UpNAzKeG7ioT5yzNsbyQBGv9aXiBRHYC1f50Veals" />
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- /search2-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<!-- For accesssing css in django-->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'jokes/style.css' %}">
+<!--   For bootstrap   -->
+<link rel="stylesheet" type="text/css" href="{% static 'jokes/bootstrap.min.css' %}">
+
+<!--for google font Aladin:-->
+<link href='https://fonts.googleapis.com/css?family=Aladin' rel='stylesheet'>
+
+<script src="{% static 'jokes/script.js' %}"></script>
+
+<!-- For dark mode & making website responsive (mobile-friendly) -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+<style>
+body {  background-color: white;color:red;
+    font-family: 'Aladin';font-size: 26px;
+    <!--HTML font: font-family: 'Brush Script MT',cursive;font-size: 26px;-->}
+
+.dark-mode {
+  background-color: #18191A;/*<!--For dark mode. background co;or of heading:#242526-->*/
+  color: white;
+}
+
+/* For Clickable categories */
+.GFG { 
+  background-color: white; 
+  border: 2px solid black; 
+  background-color: white;
+  color:green;
+  padding: 5px 10px; 
+  text-align: center; 
+  display: inline-block; 
+  font-size: 20px; 
+  margin: 10px 10px; 
+  cursor: pointer; 
+} 
+
+</style>
+</head>
+<body>
+<!--I want Her-->
+
+<!--#################- Navigation Bar -###########################-->
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <a class="navbar-brand" href="/cos/"> <img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/RkaVBmn.gif" width="50"><!--<img class="img-fluid img-responsive rounded-circle mr-2" src="https://us.123rf.com/450wm/mishgan/mishgan1901/mishgan190100063/114824766-modern-glowing-blue-and-red-cosmic-concept-yin-and-yang-mandala-colorful-ornamental-spiritual-relaxa.jpg?ver=6" width="50"><img class="img-fluid img-responsive rounded-circle mr-2" src="https://ambikacollins.files.wordpress.com/2015/05/yin-yang-shutterstock.jpg?w=300&amp;h=300" width="50"><img class="img-fluid img-responsive rounded-circle mr-2" src="https://cache.desktopnexus.com/thumbseg/1798/1798169-bigthumbnail.jpg" width="50">-->    <!--Always expand-->
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExample02">
+    <ul class="navbar-nav mr-auto">
+      <!--<li class="nav-item active">
+        <a class="nav-link" href="/index/">Home <span class="sr-only">(current)</span></a>
+      </li>--
+      <li class="nav-item">
+        <a class="nav-link" href="/chit-chat/">Chat</a>
+      </li>-->
+      {% if user.isLoggedIn %}
+        <li class="nav-item">
+          <a class="nav-link" href="/login/">LogOut</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link active" href="/login/">LogIn</a>
+        </li>
+      {% endif %}
+      <!--<li class="nav-item">
+        <a class="nav-link active" href="/feedback/"><b>feedback</b></a>
+        </li>-->
+      <li class="nav-item">
+        <a class="nav-link" href="#">{{total_jokes}}</a>
+      </li>
+            
+            <!--<li class="nav-item">
+        <a class="nav-link" href="/chit-chat/">Register</a>
+      </li>-->
+    </ul>
+    <form class="form-inline my-2 my-md-0" action="/index/" method="POST">
+      {% csrf_token %}
+      <input class="form-control" type="text" placeholder="Search" name="search_term">
+    </form>
+  </div>
+</nav>
+<!-- ############################################################### -->
+
+
+<!-- Select categories Nice Error->
+<form id="formName" method='POST' action='/index/' method="get">
+{% csrf_token %}
+{% for category in categories %}
+<lable style="background-color: white;border: 2px solid black;color: green;padding: 5px 10px;text-align: center;display: inline-block;font-size: 20px;margin: 10px 10px;cursor: pointer;">
+
+<input type ="checkbox" name="category" value = "{{category}}" onchange="document.getElementById('formName').submit()">{{category}}</input>
+</lable>
+{% endfor %}-->
+
+
+
+<!-- #######################- Categories -########################### -->
+<div class="container-fluid">
+  <div class="row">
+    
+    <div class="col-8">
+      <button class="collapsible" style="font-size:2vw;">Categories</button>
+      <div class="collapsable_content" style="background-color:#18191A">
+
+
+      <!-- Select categories Nice Error-->
+      <form id="categorySendForm" method='POST' name="{{category}}" action='/index/'>
+      {% csrf_token %}
+      {% for each_category in categories %}
+        
+      <div class='GFG'><!--  for nice look-->
+      <label><!-- To make checkbox text clickable-->
+      <input type ="checkbox" name="category" value = "{{each_category}}" style="opacity:0;" onchange="document.getElementById('categorySendForm').submit();/*var catt={{each_category}}*/">{{each_category}}</input>
+      </div>
+      </label>
+      {% endfor %}
+      </form>
+
+      </div>
+    </div>
+
+    <div class="col-2"><li class="nav-item">
+        <a class="nav-link active" href="/feedback/" style="color:white;background-color:#777777;"><b>feedback</b></a>
+        </li>
+    </div>
+
+    <div class="col-2">
+
+      <!--Dark mode toggle switch:-->
+      <label class="switch">
+      <input type="checkbox" onchange="darkFunction()" id="theme-switcher">
+      <span class="slider round">Dark_mode</span>
+      </label>
+    </div>
+
+
+</div><br><br>
+</div>
+
+<div id="rake" value="{{category}}"></div>
+<!-- ############################################################# -->
+
+
+<!-- #######################- Joke -################################ -->
+<!--To get data from django-postgre-->
+{% if latest_joke_list %}
+{% for joke in latest_joke_list %}
+
+<!---->
+<section id={{forloop.counter}}>
+
+<!--	<article class="article">-->
+
+		
+		<header class="title-header"><h2>{{ joke.title }} </h2></header>
+		<div class="content">
+		  <div id="truncatedDiv"> {{ joke.body|truncatewords:'40' }} </div>
+		  <div id="hiddenDiv" class="hidden" > {{ joke.body }} </div>
+        
+          <button class="read-more-btn">Read More</button>
+          <div class="love-icon" id={{joke.id}} onClick="Love()">♡</div>
+		</div>
+		
+<!--	</article>-->
+</section>
+
+<!--
+<div class="container">
+
+  <div class="row">
+    <div class="col">
+    <h2>{{ joke.title }}</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    
+    <div class="col" id="truncatedDiv">
+      {{ joke.body|truncatewords:'40' }}
+    </div>
+    
+    <div class="col" id="hiddenDiv">
+      {{ joke.body }}
+    </div>
+  </div>
+
+</div>
+-->
+<!-- ############################################################# -->
+
+<!-- ###############trigger on scrolling to specific spot############# -->
+<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+var element_position = $('#scroll-to').offset().top;
+
+window.on('scroll', function() {
+    var y_scroll_pos = window.pageYOffset;
+    var scroll_pos_test = element_position;
+
+    if(y_scroll_pos > scroll_pos_test) {
+        alert('I want her')
+    }
+});-->
+
+
+
+
+
+
+
+
+
+
+<!--#####################- Comments -##############################-->
+
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8">
+            
+            <form action="/index/" method="POST">
+            {% csrf_token %}
+                  <input type="checkbox" id="{{joke.id}}" name="joke_id" value="{{joke.id}}" style="opacity:0;/* position:absolute; left:9999px;*/" checked><!--{{joke.id}}-->
+            <div class="d-flex flex-row add-comment-section mt-4 mb-4"><img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" width="38"><input type="text" name="comment" class="form-control mr-3" placeholder="Add comment"><button action="/index/" class="btn btn-primary" type="submit">Comment</button></form></div>
+
+{% for comment in joke.comments_set.all %}
+            <div class="card p-3 mt-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="user d-flex flex-row align-items-center"> <img src="https://i.imgur.com/stD0Q19.jpg" width="30" class="user-img rounded-circle mr-2"> <span><small class="font-weight-bold text-primary">{{ comment.user.username.title }}<!--rashida_jones--></small> <small class="font-weight-bold">{{ comment }}<!--{ comment.body }}Really cool Which filter are you using? --></small></span> </div> <small> <!--{ comment.duration }}-->3 days ago</small>
+                </div>
+                <div class="action d-flex justify-content-between mt-2 align-items-center">
+                    <div class="reply px-4"> <small>Remove</small> <span class="dots"></span> <small>Reply</small> <span class="dots"></span> <small>Translate</small> </div>
+                    <div class="icons align-items-center"> <i class="fa fa-user-plus text-muted"></i> <i class="fa fa-star-o text-muted"></i> <i class="fa fa-check-circle-o check-icon text-primary"></i> </div>
+                </div>
+            </div>
+     <!--<a href='thunder-bird.herokuapp.com'>♥️♡❤️❤️</a>-->
+{% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+{% endif %}
+tcat:{{category}}
+<!--##################################################################-->
+<!--################## Ajax jokes ################################-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmpexjPO0Y2KsSld1zq42ZJGIIDiQRbqfDQFV46pjsoJUI2JyAVk5gLiHQ3rcwYVyMDYaFUhpL6wA&amp;usqp=CAU" alt="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmpexjPO0Y2KsSld1zq42ZJGIIDiQRbqfDQFV46pjsoJUI2JyAVk5gLiHQ3rcwYVyMDYaFUhpL6wA&amp;usqp=CAU" class="shrinkToFit" width="182" height="228">
+
+
+<!--{% load static %}
+<img src={% static 'memes/images/purnika_shah.jpeg'%} height=100 width=50 alt='purnika' >-->
+
+<script>
+  readMore();
+  getCategories();
+
+  //For getting new Jokes from ddatabase
+  if (typeof newMax == 'undefined') {
+      var  newMax=15;  // to get max joke_id in the
+  }
+
+  if (typeof newMaxJoke == 'undefined') {
+      var  newMaxJoke=15;  // to get max joke_id which increases by 10 every time whether or not 10 jokes are fetched for avoiding jokes to be repeated because some jokes listed in favourite jokes are not scrapped. this variable is to be replacae by newMaxs after all jokes are scrapped and added to database.
+  }
+
+  if (typeof temp == 'undefined') {
+    var temp = 0;  // to avoid requesting for same jokes multiple times
+  }
+  
+  $(window).on('scroll', (function() {
+     var hT = $('#'+(+newMax-5)).offset().top,
+         hH = $('#'+(+newMax-5)).outerHeight(),
+         wH = $(window).height(),
+         wS = $(this).scrollTop();
+     if (wS > (hT+hH-wH) | $(window).scrollTop() + $(window).height() == $(document).height()){
+         //console.log('H1 on the view!');
+         //To get new jokes
+         //getJokes();
+           
+           if (temp < newMax){
+           
+           temp = newMax;
+           category = document.getElementById("categorySendForm").name;
+           
+           $.ajax({
+             type: 'GET',
+             url: "{% url 'get_jokes' %}",
+             data: {"last_joke_id": newMaxJoke, 'category':category},
+             success: function (response) {
+                  // if not valid user, alert the user
+                  //alert("What is this?");
+                  /*if(!response["valid"]){
+                      alert("You cannot create a friend with same nick name");
+                      var nickName = $("#id_nick_name");
+                      nickName.val("")
+                      nickName.focus()
+    
+                  }*/
+    //if (JSON.parse(response["repeat"])==true) console.log('trrrrue')
+
+                  var instance = JSON.parse(response["jokes"]);
+                  //console.log(instance)
+                  var jokes = instance[0]["fields"];
+                  //console.log();
+                  //console.log(jokes);
+                  for (i=0;i<instance.length;i++){
+                    //console.log('length' + instance.length)
+                    newMax += 1;
+                    readMore();
+                    //console.log(instance[i]['fields']['title']);
+                    //############### Nested divs Here ########################
+                    appendJoke(instance[i]['fields']['title'], instance[i]['fields']['body'].substring(0,250), instance[i]['fields']['body'])
+
+              } newMaxJoke += 10;
+  
+          },            error: function (response) {
+                  console.log(response)
+              }
+          
+          
+     })}
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         }}))
+
+</script>
+
+
+  </body>
+</html>

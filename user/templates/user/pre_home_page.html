@@ -1,0 +1,139 @@
+<style>
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+
+if you want your check box to keep its height and width but only be invisible:
+
+.hiddenCheckBox{
+    visibility: hidden;
+}
+
+if you want your check box to be invisible without any with and height:
+
+.hiddenCheckBox{
+    display: none;
+}
+
+###########################################################
+implement javascript to make bold and change circle colour when checked
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+{%if unselected_categories %}
+
+
+
+<H1>Categories:</h1>
+
+<form action="/user/categories/" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ upload_form }}
+
+  {% for category in unselected_categories %}
+  <input type="checkbox" id="{{category}}" name="{{category}}" value="{{category}}" style="opacity:0;/* position:absolute; left:9999px;*/">
+  <label for="{{category}}"> {{ category }}</label><br>
+  {% endfor %}
+
+  {% for category in pre_selected_categories %}
+  <input type="checkbox" id="{{category}}" name="{{category}}" value="{{category}}" style="opacity:0;/* position:absolute; left:9999px;*/" checked>
+  <label for="{{category}}"> {{ category }}</label><br>
+
+  {% endfor %}
+
+  <button type="submit">submit</button>
+
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+{% elif getUSerInfo%}
+
+<form action="/user/info/" method="POST">
+  {% csrf_token %}
+
+Username:&emsp;&ensp;&nbsp;&emsp; <input id="username" type="text" name="username" value={{user.username}}><br><br>
+First name:&emsp;&nbsp;&emsp; <input id="first_name" type="text" name="first_name" value="{{ user.first_name }}"><br><br>
+Middle name:&emsp;&emsp; <input id="middle_name" type="text" name="middle_name" value="{{ user.middle_name }}"><br><br>
+Last name:&emsp;&emsp;&emsp;&emsp; <input id="last-name" type="text" name="last_name" value="{{ user.last_name }}"><br><br>
+email:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <input id="email" type="text" name="email" value="{{ user.email }}"><br><br>
+
+Country:&emsp;&emsp;&emsp;&emsp;&emsp; <input id="country" type="text" name="country" value="{{ user.her_country}}"><br><br>
+
+<br>!!{{message}}:<br><br>
+
+phone number:&emsp; <input id="phone_number" type="text" name="phone_number" value="{{ user.phone_number }}"><br><br>
+Relligion:&emsp;&emsp;&emsp;&emsp; <input id="relligion" type="text" name="relligion" value="{{ user.relligion }}"><br><br>
+<button type="submit"> Submit</button>
+
+
+
+
+
+
+<!--    <p>This is a &nbsp; regular space.</p> 
+    <p>This is a &ensp; two spaces gap.</p> 
+    <p>This is a &emsp; four spaces gap.</p> -->
+
+
+
+{% else %}
+
+<form action="/action_page.php">
+  <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+  <label for="vehicle1"> I have a bike</label><br>
+  <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+  <label for="vehicle2"> I have a car</label><br>
+  <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+  <label for="vehicle3"> I have a boat</label><br><br>
+  <input type="submit" value="Submit">
+</form>
+
+
+ <input type="text" name="search_term" maxlength="100" required="" id="id_search_term" placeholder="Search..">
+
+  <button type="submit"><i class="fa fa-search"></i></button>
+{% endif %}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- For accesssing css in django-->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'jokes/style.css' %}">
+
+<!--for google font Aladin:-->
+<link href='https://fonts.googleapis.com/css?family=Aladin' rel='stylesheet'>
+
+<!-- For making website responsive (mobile-friendly) -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+<!--for dark mode:-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+
+body {  background-color: white;color:red;
+    font-family: 'Aladin';font-size: 26px;
+
+
+
+* {
+  box-sizing:border-box;
+}
+
+<!--For Responsive Web Page (Mobile Friendly Web-Pages) */
+/* Use a media query to add a break point at 1235px: -->
+
+@media only screen and (max-width:1235px) {
+  .article  {
+    width:100%;
+  }
+
+
+</style>
+</head>
+<body>
+
+<!-- <For dark mode button> -->	
+<button onclick="myFunction()">Toggle dark mode</button>
+
+<script>
+<!-- <For dark mode button> -->	
+function myFunction() {
+   var element = document.body;
+   element.classList.toggle("dark-mode");
+}
+
+<!--For read More Button-->
+function readFunction() {
+  var dots = document.getElementById("dots");
+  var moreText = document.getElementById("more");
+  var btnText = document.getElementById("myBtn");
+
+  if (dots.style.display === "none") {
+    dots.style.display = "inline";
+    btnText.innerHTML = "Read more"; 
+    moreText.style.display = "none";
+  } else {
+    dots.style.display = "none";
+    btnText.innerHTML = "Read less"; 
+    moreText.style.display = "inline";
+  }
+}
+
+
+
+
+</script>
+<!-- </For dark mode button> -->	
+
+<section class="flex-parent">
+	<article class="article">
+
+		
+		<header class="title-header"><h2>Women :</h2></header>
+		<div class="content">Women are like telephones.  They love to be held.   They love to be talked to.   But, if you press the wrong button, youre disconnected.</div>
+		
+	</article>
+
+	<article class="article">
+		
+		<header class="title-header"><h2>Girls and virus:</h2></header>
+		<div class="content">Girls are like an internet virus:  they enter your life, scan your pockets, transfer money, edit your mind, download their problems and delete your smile...
+</div>
+		
+	</article>
+	
+	<article class="article">
+		
+		<header class="title-header"><h2>I AM BAD:</h2></header>
+		<div class="content">I AM BAD: in ENGLISH BUT I can tell you that I LOVE YOU.. I am BAD in GEOGRAPHY BUT i can tell you that you LIVE in my HEART.. I am BAD in HISTORY BUT I can REMEMBER when i FIRST saw you..I am BAD in CHEMISTRY BUT I can tell WHATS the REACTION when you SMILE..<span id="dots">...</span><span id="more"> I am BAD in PHYSICS BUT I can tell the INTENSITY of SPARK of my EYES when they SEE you.. I am BAD in every SUBJECT BUT I can TELL ALL.. I will PASS all SUBJECTS if the TOPIC is YOU...</span></div>
+		<div class="read-more-btn"><button onclick="readFunction()" id="myBtn"><b>Read more</b></button></div>
+		</div>
+	
+
+	</article>
+</section>
+
+
+  
+<center><img height=500px width=500px SRC=https://exam.ioe.edu.np/Images/StudentCurrentImage/3024/SEC075BCE042.jpg></img>
+
+
+
+<script>
+function readmoreFunction(){
+	document.getClassById("hidden").style.diaplay:'block';}
+	
+</script>
+
+<script>
+//For Readmore Button:
+//function readmoreFunction(){
+    /*var coll = document.getElementsById("readmoreBtn");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function() {
+		  this.classList.toggle("active");
+		  var content = this.nextElementSibling;
+		  if (content.style.display === "block") {
+			content.style.display = "none";
+		  } else {
+			content.style.display = "block";
+		  }
+		});
+	}
+    
+    
+    
+  */ 
+	var button = document.getElementsByClassName("readmoreBtn");
+    var i;
+    
+    for (i=0; i<button.length; i++ ){
+		button[i].addEventListener("click", function() {
+			
+			//Truncated string lies two div behind button
+			var truncated = this.previousElementSibling.previousElementSibling;
+			if (truncated.style.display === "none") {
+				truncated.style.display = "block";
+				this.innerHTML = "Read More";
+			} else {
+				truncated.style.display = "none";
+				this.innerHTML = "Read Less";
+			}
+
+			//hidden string lies one div behind button			
+			var hiddenn = this.previousElementSibling;
+			if (hiddenn.style.display === "block") {
+				hiddenn.style.display = "none";
+			} else {
+				hiddenn.style.display = "block";
+			}
+
+		});}/*
+    var btnText = document.getElementById("readmoreBtn");
+   
+   var element = document.getElementById("truncatedDiv");
+   element.classList.toggle("hidden");
+	
+	if(document.getElementById('hiddenDiv').className=="hidden") {
+	document.getElementById('hiddenDiv').className="realed";
+	btnText.innerHTML = "Read Less";
+	} else {
+	document.getElementById('hiddenDiv').className="hidden";
+	btnText.innerHTML = "Read More";
+	}
+	/*var x = document.getElementsByClassName("hidden");
+    x[0].style.display='block';
+    
+    var x = document.getElementsByClassName("realed");
+    x[0].style.display='none';*/
+    
+    //innerHTML="She is waiting...";
+     //= "Hello World!";
+	//document.getElementById('hidden').style.display='block';
+	//document.getElementById('realed').style.display='none';
+	
+	// Reference : https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_read_more
+	// Reference2 : https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_collapsible
+	
+
+
+</script>
+
+</head>
+<body>

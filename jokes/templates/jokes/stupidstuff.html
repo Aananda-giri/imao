@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stupid Stuff</title>
+<!-- For accesssing css in django-->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'jokes/style.css' %}">
+
+<!--for google font Aladin:-->
+<link href='https://fonts.googleapis.com/css?family=Aladin' rel='stylesheet'>
+
+<!-- For dark mode & making website responsive (mobile-friendly) -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+<style>
+body {  background-color: white;color:red;
+    font-family: 'Aladin';font-size: 26px;
+    <!--HTML font: font-family: 'Brush Script MT',cursive;font-size: 26px;-->}
+
+.dark-mode {
+  background-color: #18191A;<!--For dark mode. background co;or of heading:#242526-->
+  color: white;
+}
+
+
+</style>
+</head>
+<body>
+
+
+
+
+<!-- <For dark mode button -->	
+<button onclick="myFunction()">Toggle dark mode</button>
+
+<!--Dark mode toggle switch:-->
+<label class="switch">
+  <input type="checkbox" onchange="myFunction()">
+  <span class="slider round">Dark_mode</span>
+</label>
+
+<script>
+function myFunction() {
+   var element = document.body;
+   element.classList.toggle("dark-mode");
+}
+</script>
+<!-- </For dark mode> -->	
+
+
+
+
+
+
+<br><br><br>
+
+<form action="/your-name/" method="post">
+<label for="your_name">Your name: </label>
+<input id="your_name" type="text" name="your_name" maxlength="100" required>
+<input type="submit" method="post" value="OK">
+</form>
+
+<form action="/your-name/" method="post">
+    {% csrf_token %}
+    {{ NameForm }}
+    <input type="submit" value="Submit">
+</form>
+
+
+
+<!--To get data from django-postgre-->
+{% if latest_joke_list %}
+{% for joke in latest_joke_list %}
+
+
+
+
+	<article class="article">
+
+		
+		<header class="title-header"><h2>{{ joke.category }}</h2></header>
+		<div class="content">
+		<div id="truncatedDiv"> {{ joke.joke_body|truncatewords:'40' }} </div>
+		<div id="hiddenDiv" class="hidden" > {{ joke.joke_body }} </div>
+        
+        <button class="read-more-btn">Read More</button>
+		</div>
+		
+	</article>
+
+
+
+    {% endfor %}
+    {% endif %}
+
+
+<form action="/your-name/" method="post">
+    <label for="your_name">comment: </label>
+    <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
+    <input type="submit" value="OK">
+</form>
+
+
+</section>
+
+
+<script>
+	
+	//For Read More button
+	var button = document.getElementsByClassName("read-more-btn");
+    var i;
+    
+    for (i=0; i<button.length; i++ ){
+		var hiddenn = button[i].previousElementSibling;
+		var truncated = button[i].previousElementSibling.previousElementSibling;
+		
+		if(truncated.innerHTML.length + 5 >= hiddenn.innerHTML.length) button[i].style.display="none";
+		
+		button[i].addEventListener("click", function() {
+			
+			//Truncated string lies two div behind button
+			var truncated = this.previousElementSibling.previousElementSibling;
+			if (truncated.style.display === "none") {
+				truncated.style.display = "block";
+				this.innerHTML = "Read More";
+			} else {
+				truncated.style.display = "none";
+				this.innerHTML = "Read Less";
+			}
+
+			//hidden string lies one div behind button			
+			var hiddenn = this.previousElementSibling;
+			if (hiddenn.style.display === "block") {
+				hiddenn.style.display = "none";
+			} else {
+				hiddenn.style.display = "block";
+			}
+			
+			
+
+		});}
+
+</script>
+
+
+
+
+
+
+
+{% comment "Optional note" %}
+<p>Rendered text with {{ pub_date|date:"c" }}</p>
+
+    <p>Commented out text with {{ create_date|date:"c" }}</p>
+{% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
