@@ -20,3 +20,9 @@ function toggleDisplay(id, element=false){
   }
 }
 
+
+function store_and_display(joke){
+  console.log('store_and_display:'+joke);
+  var nascent_joke = joke;
+  console.log('nascent_joke:'+joke);
+}

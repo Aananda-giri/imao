@@ -1,6 +1,12 @@
 <!-- To do 
 
->> Next joke from memory -> change current url without reloading
+>> current category : Bold/(show in navbar) 
+>> Show list of jokes on clicking on category ?
+>> store batch and get second/third... batches with each batch size 100
+>> option to edit/suggest_edit reviewed by high ranking users joke/joke_title
+
+>> already read jokes
+
 >> Implement next joke in given Category 
 >> Get more data at the end of current jokes list
 >> Implement previous and next buttons
@@ -25,6 +31,8 @@ Working Upload profile pic->BrainMap
 
 5. Scroll down animated helper
 
+Done:
+>> Next joke from memory { store jokes in variable/div } -> change current url without reloading
 <!--For search icon-->
 <!DOCTYPE html>
 <html>
@@ -132,6 +140,7 @@ hr {
   background: white;
 }
 /*  --------------------- For Buttons  -------------------------------  */
+/*source:https://codepen.io/yuhomyan/pen/OJMejWJ*/
 button {
   margin: 20px;
 }
@@ -189,10 +198,128 @@ background-image: linear-gradient(315deg, #1fd1f9 0%, #b621fe 74%);
     inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
 }
 
+/* 5 */
+.btn-5 {
+  width: 130px;
+  height: 40px;
+  line-height: 42px;
+  padding: 0;
+  border: none;
+  background: rgb(255,27,0);
+background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
+}
+.btn-5:hover {
+  color: #f0094a;
+  background: transparent;
+   box-shadow:none;
+}
+.btn-5:before,
+.btn-5:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #f0094a;
+  box-shadow:
+   -1px -1px 5px 0px #fff,
+   7px 7px 20px 0px #0003,
+   4px 4px 5px 0px #0002;
+  transition:400ms ease all;
+}
+.btn-5:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.btn-5:hover:before,
+.btn-5:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
 
 
-
-
+/* 6 */
+.btn-6 {
+  background: rgb(247,150,192);
+background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 100%);
+  line-height: 42px;
+  padding: 0;
+  border: none;
+}
+.btn-6 span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.btn-6:before,
+.btn-6:after {
+  position: absolute;
+  content: "";
+  height: 0%;
+  width: 1px;
+ box-shadow:
+   -1px -1px 20px 0px rgba(255,255,255,1),
+   -4px -4px 5px 0px rgba(255,255,255,1),
+   7px 7px 20px 0px rgba(0,0,0,.4),
+   4px 4px 5px 0px rgba(0,0,0,.3);
+}
+.btn-6:before {
+  right: 0;
+  top: 0;
+  transition: all 500ms ease;
+}
+.btn-6:after {
+  left: 0;
+  bottom: 0;
+  transition: all 500ms ease;
+}
+.btn-6:hover{
+  background: transparent;
+  color: #76aef1;
+  box-shadow: none;
+}
+.btn-6:hover:before {
+  transition: all 500ms ease;
+  height: 100%;
+}
+.btn-6:hover:after {
+  transition: all 500ms ease;
+  height: 100%;
+}
+.btn-6 span:before,
+.btn-6 span:after {
+  position: absolute;
+  content: "";
+  box-shadow:
+   -1px -1px 20px 0px rgba(255,255,255,1),
+   -4px -4px 5px 0px rgba(255,255,255,1),
+   7px 7px 20px 0px rgba(0,0,0,.4),
+   4px 4px 5px 0px rgba(0,0,0,.3);
+}
+.btn-6 span:before {
+  left: 0;
+  top: 0;
+  width: 0%;
+  height: .5px;
+  transition: all 500ms ease;
+}
+.btn-6 span:after {
+  right: 0;
+  bottom: 0;
+  width: 0%;
+  height: .5px;
+  transition: all 500ms ease;
+}
+.btn-6 span:hover:before {
+  width: 100%;
+}
+.btn-6 span:hover:after {
+  width: 100%;
+}
 
 
 
@@ -292,18 +419,21 @@ background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
 <body>
 
 <script>
-function displayMessage(message){
-  colsole.log('\n\n-----------------Message:-----------------\n'+ message + '-----------------------------------------');
+function display_message(message){
+  console.log('\n\n-----------------Message:-----------------\n'+ message + '-----------------------------------------');
 }
 
-  function store_and_display(joke){
-    console.log(joke);
-    
-  }
+
   
 function get_category(category){
   console.log('Sending data of category: ' + category);
+  if ( typeof(batch)=='undefined' ){
+    var batch=0;
+    print('defining batch')
+  } else{batch += 1;}
     
+  var jokes_stack;
+  var stack_pointer;
       //Ajax to get all comments
   $.ajax({
     
@@ -312,13 +442,18 @@ function get_category(category){
     data: {'category':category},
     success: function(response) {
       console.log("\n\nCategory data Successfully recived.\n");
-      console.log( response );
-      var jokes_stack = response['jokes'];
+      console.log( response['jokes'] );
+      
+      window.jokes_stack = JSON.parse(response['jokes']);
+      window.stack_pointer = 0;
+      display_message('getting jokes data');
+      nextJoke();
+      batch += 1
+      //console.log('jokes_stack:'+jokes_stack);
+      //store_and_display(jokes_stack);
       var category = response['category'];
       
-      if (typeof stack_pointer == 'undefined') {
-        var  stack_pointer = 0;
-      } else{stack_pointer = 0;}
+      
       
       //displayJokes(response);
     
@@ -333,36 +468,43 @@ function get_category(category){
 }
 
 
-function display_joke(id, category='general'){
-  displayMessage('\n\ndisplaying new joke\n');
+function display_joke(joke, category='general'){
+  display_message('\n\ndisplaying new joke\n');
   
       //var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?foo=bar';
     //window.history.pushState({path:newurl},'',newurl);
     
     
-    var newUrl = window.location.protocol + "//" + window.location.host + '/jokes/'+joke.id+'/';
-    window.history.pushState({path:newurl},'',newurl);
+    var newUrl = window.location.protocol + "//" + window.location.host + '/jokes/'+joke.pk+'/';
+    window.history.pushState({path:newUrl},'',newUrl);
     
-    displayMessage('new_url: '+newUrl);
-
+    display_message('new_url: '+newUrl);
+    display_message('joke:' + joke.fields.body + 'title:' + joke.fields.title);
+    
+    title = document.getElementById('joke_heading');
+    title.textContent = joke.fields.title;
+    
+    body = document.getElementById('joke_body');
+    body.textContent = joke.fields.body;
 }
 
-function nextJoke(id, category='general'){
+function nextJoke(id=0, category='general'){
   console.log('For next joke, current_joke_id:'+id);
   
   
     //To get jokes from jokes homepage initially.
-  if (typeof stack_pointer == 'undefined') {
-    var  stack_pointer = 0;
-  }
-  
-  if (stack_pointer === jokes_stack.length || typeof jokes_stack == 'undefined'){
+  if (typeof stack_pointer == 'undefined' || stack_pointer === jokes_stack.length || typeof jokes_stack == 'undefined'){
+    
+    display_message('getting jokes datas of caegory:'+category);
     get_category(category);
+    
+  } else{
+    let joke = jokes_stack[stack_pointer];
+    stack_pointer = stack_pointer + 1;
+    
+    console.log('nextJoke: '+joke);
+    display_joke(joke, category);
   }
-  
-  joke = jokes_stack[stack_pointer];
-  stack_pointer += 1;
-  display_joke(joke, category);
 }
 
   
@@ -371,14 +513,22 @@ function previousJoke(id, category='general'){
   console.log('For previous, joke current_joke_id:'+id);
     //To get jokes from jokes homepage initially.
   
-  if (typeof stack_pointer == 'undefined' || typeof jokes_stack == 'undefined') {
+  if (typeof stack_pointer == 'undefined' || stack_pointer >= jokes_stack.length || typeof jokes_stack == 'undefined'){
+    display_message('getting jokes datas of caegory:'+category);
     get_category(category);
+  } else {
+  
+    stack_pointer -= 1;
+    if (stack_pointer <= 0){
+      stack_pointer = 0;
+      display_message(' Sorry, no previoius jokes available.')
+    } else if(stack_pointer==0){
+    }  else{
+      let joke = jokes_stack[ stack_pointer - 1 ];
+      console.log('previousJoke: '+joke);
+      display_joke(joke, category);
+    }
   }
-  
-  joke = jokes_stack[ stack_pointer-1 ];
-  stack_pointer -= 1;
-  display_joke(joke, category);
-  
 }
 
 </script>
@@ -388,6 +538,7 @@ function previousJoke(id, category='general'){
   <script>
     store_and_display("{{joke}}");
     console.log('joke: ' + "{{joke}}");
+    
   </script>
 
 <!--
@@ -427,26 +578,27 @@ function previousJoke(id, category='general'){
   {% endfor %}
   </section>
 </div>  
+<!--
+<button type="button" class="btn btn-default btn-lg" style="background:white;" onClick="toggleDisplay('category_div');">
+  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Categories
+</button>  
 
+<button class="custom-btn btn-6" onClick="toggleDisplay('category_div');"><span>Read More</span></button>-->
+  
+<button class="custom-btn btn-5 mx-auto d-block" onClick="toggleDisplay('category_div');"><span>Categories</span></button>
   
   
   
-  
-  
-  
-  
-  
+
   
   
 <div class="rounded my-5 mx-3 text-center" style="background:#2F343F;height:90vh;">
 
-<button type="button" class="btn btn-default btn-lg" style="background:white;" onClick="toggleDisplay('category_div');">
-  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Categories
-</button>
 
-  <h1><b class="heading"> {{joke.title}}<!--Hello World--> </b></h1>
+
+  <h1><b class="heading" id="joke_heading"> {{joke.title}}<!--Hello World--> </b></h1>
   <hr class="rounded m-2">
-  <div class="text_body p-1"  style="    display: block;
+  <div class="text_body p-1" id="joke_body" style="    display: block;
     display: -webkit-box;
     width:100%;
     /*max-width: 400px;*/
@@ -626,6 +778,3 @@ Ooh, you keep me coming for ya-->
 -->
 </body>
 </html>
-immporral, importal 1 eye
-Belken ext
-unluckey Net

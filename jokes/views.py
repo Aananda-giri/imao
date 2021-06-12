@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 
+
 from .models import WockaJokes, UploadJokes, Feedbacks, Jokes
 from django.template import loader
 
@@ -564,12 +565,12 @@ def get_category(request, category=None):
     
     if (category=='general' or category==None):
         #order_by('-loves') once enough loves are given
-        jokes = Jokes.objects.all().order_by('-rating')[:100]
+        jokes = list(Jokes.objects.using('jokes').all().order_by('-rating')[:100])
         category = 'general'
     
     else:
         #order_by('-loves') once enough loves are given
-        jokes = Jokes.objects.filter(category=category).order_by('-rating')
+        jokes = list(Jokes.objects.using('jokes').filter(category=category).order_by('-rating'))
     
     
     if category!=None:
