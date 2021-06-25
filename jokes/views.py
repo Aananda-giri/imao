@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 
 
-from .models import WockaJokes, UploadJokes, Feedbacks, Jokes
+from .models import WockaJokes, UploadJokes, Feedbacks, Jokes, JokeComments
 from django.template import loader
 
 from django.urls import reverse
@@ -463,16 +463,34 @@ def getComments(request):
         # get the nick name from the client side.
         joke_id = request.GET.get("joke_id", None);
         category = request.GET.get("category", None)
-        if str(category) == 'Adult':
-            db = AbsurdlyBigJokes
+        which_jokes = request.GET.get("which_jokes", None)
+        
+        print('For Comments: joke_id:{}  category:{}  which_joke:{}'.format(joke_id, category, which_jokes))
+        
+        if (str(which_jokes)=='jokes'):
+            #db = Jokes
+            #db_name = 'jokes'
+            comments = Jokes.objects.using('jokes').get(id=joke_id).jokecomments_set.all()
+            print('\nDB: Jokes  id: {}'.format(id))
+            
         else:
-            db = WockaJokes
+            if str(category) == 'Adult':
+                db = AbsurdlyBigJokes
+                db_name = 'default'
+                print('\nDB: AbsurdlyBigJokes')
+            else:
+                db = WockaJokes
+                db_name = 'default'
+                print('\nDB: WockaJokes')
+            
+            comments = db.objects.using(db_name).get(id=int(joke_id)).comments_set.all()
     #print('\n\njoke_id:' + str(int(joke_id)))
-    comments = db.objects.get(id=int(joke_id)).comments_set.all()
-    print(comments)
+    
+    print('\n\nComments:\t {}\n'.format(comments))
     comments = serializers.serialize('json', comments, )
     
     return JsonResponse({'comments':comments},status=200)
+
 
 @login_required
 def saveComment(request):
@@ -497,6 +515,22 @@ def saveComment(request):
         else:
             Comments.objects.create(body=str(comment), user_id=str(username),wockajokes_id=int(joke_id))
     return HttpResponse('Successfully commented')
+
+def saveNewJokesComment(request):
+    if request.is_ajax and request.method == "POST":
+        # get the nick name from the client side.
+        username = request.POST.get("username", None);
+        comment = request.POST.get("comment", None);
+        joke_id = request.POST.get("joke_id", None);
+        email = request.POST.get("email", None);
+        
+    if not str(comment).strip()=='':
+        JokeComments.objects.using('jokes').create(body=str(comment), jokes_id = int(joke_id), email = email, username = username)
+        return HttpResponse('Successfully commented')
+    
+    else:
+        return HttpResponse('Comment is empty')
+
 
 def feedback(request):
     
@@ -531,7 +565,8 @@ def each_joke(request, joke_id = None):
     
     if joke_id != None:
         jokes = Jokes.objects.using('jokes').filter( id = int(joke_id) )[0]
-        random_joke=False
+        
+        random_joke = False
     else:
         print('\nfirst_template: getting random joke \n')
         jokes = Jokes.objects.using('jokes').all().order_by('-loves')[0]
@@ -546,13 +581,12 @@ def each_joke(request, joke_id = None):
     print('Returning By render joke_id = '+str(joke_id) + '\t' + str(jokes))
     return render(request, template_1, { 'jokes' : [jokes], 'random_joke' : random_joke, 'categories':categories })
 
-def joke_by_id(request, joke_id=None):
-    jokes = Jokes.objects.all()[:2]
-    
-    print(jokes)
-    
-    template_1 = 'jokes/template.html'
-    return render(request, template_1, {'jokes':jokes})
+'''        favourite_ids=[]
+        #print('\n\n\n\n\n\nHello\n\n\n\n\n')
+        with open('jokes/wockaFavList.json', 'r') as f:
+            favourite_ids=json.load(f)
+        
+        latest_joke_list = WockaJokes.objects.filter(id__in=favourite_ids[0:15])'''
 
 def get_category(request, category=None):
     
@@ -565,17 +599,26 @@ def get_category(request, category=None):
     
     if (category=='general' or category==None):
         #order_by('-loves') once enough loves are given
-        jokes = list(Jokes.objects.using('jokes').all().order_by('-rating')[:100])
+        
+        #jokes = list(Jokes.objects.using('jokes').all().order_by('-rating')[:100])
+        #jokes = Jokes.objects.using('jokes').all().order_by('-rating')[:100]
+        favourite_ids=[]
+        with open('jokes/wockaFavList.json', 'r') as f:
+            favourite_ids=json.load(f)
+        
+        jokes = Jokes.objects.using('jokes').filter(source_id__in=favourite_ids[:300], source='http://www.wocka.com/').order_by('-rating')
         category = 'general'
     
     else:
         #order_by('-loves') once enough loves are given
         jokes = list(Jokes.objects.using('jokes').filter(category=category).order_by('-rating'))
+        jokes = Jokes.objects.using('jokes').filter(category=category).order_by('-rating')
     
-    
+    #comments = db.objects.get(id=int(joke_id)).comments_set.all()
     if category!=None:
     #return HttpResponse('\n Received via Json. \n')
         jokes = serializers.serialize('json', jokes, )
+        #print(serializers.serialize('json', [jokes[0]], ))
         return JsonResponse({'jokes':jokes, 'category':category},status=200)
     
     else:

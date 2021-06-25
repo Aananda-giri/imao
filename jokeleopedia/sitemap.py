@@ -34,7 +34,7 @@ class LoginViewSitemap(Sitemap):
         return reverse(item)
 
 class EachJokes(Sitemap):
-    changefreq = 'monthly'
+    changefreq = 'weekly'
     priority = 0.8
     protocol = 'https'
 

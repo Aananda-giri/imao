@@ -26,8 +26,10 @@ urlpatterns = [
     
     path('get/jokes/', views.getJoke, name='get_jokes'),
     path('vote', views.vote, name='vote'),
+    
     path('comments', views.getComments, name='comments'),
     path('savecomment', views.saveComment, name='savecomment'),
+    path('save_new_jokes_comment', views.saveNewJokesComment, name='save_new_jokes_comment'),
     
     
     

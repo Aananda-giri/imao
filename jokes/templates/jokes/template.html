@@ -1,11 +1,18 @@
-<!-- To do 
-
+<!-- To do https://stackoverflow.com/questions/4274489/how-can-i-make-an-upvote-downvote-button
+now: Jokes rating slider
+Favicons:
+https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/softbank/145/imp_1f47f.png
+https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/htc/37/imp_1f47f.png
+>> love, comments, already read jokes
 >> current category : Bold/(show in navbar) 
 >> Show list of jokes on clicking on category ?
 >> store batch and get second/third... batches with each batch size 100
 >> option to edit/suggest_edit reviewed by high ranking users joke/joke_title
 
->> already read jokes
+>> 
+
+
+>> Next joke from memory -> change current url without reloading
 
 >> Implement next joke in given Category 
 >> Get more data at the end of current jokes list
@@ -31,19 +38,23 @@ Working Upload profile pic->BrainMap
 
 5. Scroll down animated helper
 
+<<<<<<< HEAD
 Done:
 >> Next joke from memory { store jokes in variable/div } -> change current url without reloading
+
+
 <!--For search icon-->
-<!DOCTYPE html>
+<!DOCTYPE html lang="en-US">
 <html>
 <head>
 <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-<title>Largest collection of best jokes on the internet</title>
+<title>{{jokes.0.title}}</title>
 
 <!--Define keywords for search engines:-->
-<meta name="keywords" content=" joke, {{jokes.0.title}}, {{jokes.0.title}} ">
+<meta name="keywords" content=" joke, jokes, laugh, funny, comedy, comedian, {{jokes.0.title}}, {{jokes.0.title}}, tiktok_content ">
 
-<meta name="description"  content="joke:{{jokes.0.body}}">
+<!-- Description for search engines -->
+<meta name="description"  content="This is the Largest collection of best jokes on the internet like this one called '{{jokes.0.title}}'">
 
 <!-- For Google Search Console -->
 <meta name="google-site-verification" content="B3UpNAzKeG7ioT5yzNsbyQBGv9aXiBRHYC1f50Veals" />
@@ -51,17 +62,26 @@ Done:
 <!-- For Bing Webmaster -->
 <meta name="msvalidate.01" content="796C5390EDBEB82180F4A5850D7F73C8" />
 
+<!-- For yandex Webmaster -->
+<meta name="yandex-verification" content="e20bcde1da252597" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!-- /search2-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<!-- For SEO -->
+<meta charset="UTF-8">
 
 <!-- For accesssing css in django-->
 {% load static %}
+<!-- For favicon icon -->
+<link rel="shortcut icon" type="image/png" href="{% static 'jokeleopedia/1apple-touch-icon.png' %}"/>
 
-<link rel="stylesheet" type="text/css" href="{% static 'person/style_t2.css' %}">
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'jokes/style_t2.css' %}">
 
 <!--   For bootstrap   -->
 <link rel="stylesheet" type="text/css" href="{% static 'jokes/bootstrap.min.css' %}">
@@ -83,7 +103,390 @@ Done:
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <!-- For jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<!--  -----------------------  for sliders  ------------------------  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css" integrity="sha512-3q8fi8M0VS+X/3n64Ndpp6Bit7oXSiyCnzmlx6IDBLGlY5euFySyJ46RUlqIVs0DPCGOypqP8IRk/EyPvU28mQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.css" integrity="sha512-SZgE3m1he0aEF3tIxxnz/3mXu/u/wlMNxQSnE0Cni9j/O8Gs+TjM9tm1NX34nRQ7GiLwUEzwuE3Wv2FLz2667w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.js" integrity="sha512-tCkLWlSXiiMsUaDl5+8bqwpGXXh0zZsgzX6pB9IQCZH+8iwXRYfcCpdxl/owoM6U4ap7QZDW4kw7djQUiQ4G2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <style>
+
+#slider22 .slider-selection {
+	background: #81bfde;
+}
+
+#slider22 .slider-rangeHighlight {
+	background: #f70616;
+}
+
+#slider22 .slider-rangeHighlight.category1 {
+    background: #FF9900;
+}
+
+#slider22 .slider-rangeHighlight.category2 {
+    background: #99CC00;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ----------------  Slider 2  -----------------------------  */
+
+
+
+body{
+  background:#ccc;
+
+  /* iphone zoom fix */
+  @media only screen 
+    and (min-device-width: 320px) 
+    and (max-device-width: 568px)
+    and (-webkit-min-device-pixel-ratio: 2) {
+      input{
+        font-size:16px !important;
+      }
+    }
+
+  .container{
+    padding-top:40px;
+  }
+
+  label{
+    line-height:34px;
+  }
+
+  .form-control{
+    text-align:right;
+  }
+
+  .slider.slider-horizontal{
+
+    min-height:34px;
+    width:100%;
+
+
+    .slider-selection {
+      background: #337ab7;
+    }
+
+    .slider-handle
+    {
+      background: #337ab7;
+      border:2px solid #fff;
+      /*
+      original
+      margin:-5px 0 0 -10px;
+      height:20px
+      width:20px;
+      */
+
+      margin:-10px 0 0 -15px;
+      height:30px;
+      width:30px;
+
+
+    }
+
+  }
+}
+
+/* https://github.com/seiyria/bootstrap-slider */
+
+/*! =========================================================
+* bootstrap-slider.js
+*
+* Maintainers:
+*		Kyle Kemp
+*			- Twitter: @seiyria
+*			- Github:  seiyria
+*		Rohit Kalkur
+*			- Twitter: @Rovolutionary
+*			- Github:  rovolution
+*
+* =========================================================
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+* ========================================================= */
+.slider {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+}
+.slider.slider-horizontal {
+  width: 210px;
+  height: 20px;
+}
+.slider.slider-horizontal .slider-track {
+  height: 10px;
+  width: 100%;
+  margin-top: -5px;
+  top: 50%;
+  left: 0;
+}
+.slider.slider-horizontal .slider-selection,
+.slider.slider-horizontal .slider-track-low,
+.slider.slider-horizontal .slider-track-high {
+  height: 100%;
+  top: 0;
+  bottom: 0;
+}
+.slider.slider-horizontal .slider-tick,
+.slider.slider-horizontal .slider-handle {
+  margin-left: -10px;
+  margin-top: -5px;
+}
+.slider.slider-horizontal .slider-tick.triangle,
+.slider.slider-horizontal .slider-handle.triangle {
+  border-width: 0 10px 10px 10px;
+  width: 0;
+  height: 0;
+  border-bottom-color: #0480be;
+  margin-top: 0;
+}
+.slider.slider-horizontal .slider-tick-label-container {
+  white-space: nowrap;
+  margin-top: 20px;
+}
+.slider.slider-horizontal .slider-tick-label-container .slider-tick-label {
+  padding-top: 4px;
+  display: inline-block;
+  text-align: center;
+}
+.slider.slider-vertical {
+  height: 210px;
+  width: 20px;
+}
+.slider.slider-vertical .slider-track {
+  width: 10px;
+  height: 100%;
+  margin-left: -5px;
+  left: 50%;
+  top: 0;
+}
+.slider.slider-vertical .slider-selection {
+  width: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+.slider.slider-vertical .slider-track-low,
+.slider.slider-vertical .slider-track-high {
+  width: 100%;
+  left: 0;
+  right: 0;
+}
+.slider.slider-vertical .slider-tick,
+.slider.slider-vertical .slider-handle {
+  margin-left: -5px;
+  margin-top: -10px;
+}
+.slider.slider-vertical .slider-tick.triangle,
+.slider.slider-vertical .slider-handle.triangle {
+  border-width: 10px 0 10px 10px;
+  width: 1px;
+  height: 1px;
+  border-left-color: #0480be;
+  margin-left: 0;
+}
+.slider.slider-disabled .slider-handle {
+  background-image: -webkit-linear-gradient(top, #dfdfdf 0%, #bebebe 100%);
+  background-image: -o-linear-gradient(top, #dfdfdf 0%, #bebebe 100%);
+  background-image: linear-gradient(to bottom, #dfdfdf 0%, #bebebe 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffdfdfdf', endColorstr='#ffbebebe', GradientType=0);
+}
+.slider.slider-disabled .slider-track {
+  background-image: -webkit-linear-gradient(top, #e5e5e5 0%, #e9e9e9 100%);
+  background-image: -o-linear-gradient(top, #e5e5e5 0%, #e9e9e9 100%);
+  background-image: linear-gradient(to bottom, #e5e5e5 0%, #e9e9e9 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe5e5e5', endColorstr='#ffe9e9e9', GradientType=0);
+  cursor: not-allowed;
+}
+.slider input {
+  display: none;
+}
+.slider .tooltip.top {
+  margin-top: -36px;
+}
+.slider .tooltip-inner {
+  white-space: nowrap;
+}
+.slider .hide {
+  display: none;
+}
+.slider-track {
+  position: absolute;
+  cursor: pointer;
+  background-image: -webkit-linear-gradient(top, #f5f5f5 0%, #f9f9f9 100%);
+  background-image: -o-linear-gradient(top, #f5f5f5 0%, #f9f9f9 100%);
+  background-image: linear-gradient(to bottom, #f5f5f5 0%, #f9f9f9 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff9f9f9', GradientType=0);
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+.slider-selection {
+  position: absolute;
+  background-image: -webkit-linear-gradient(top, #f9f9f9 0%, #f5f5f5 100%);
+  background-image: -o-linear-gradient(top, #f9f9f9 0%, #f5f5f5 100%);
+  background-image: linear-gradient(to bottom, #f9f9f9 0%, #f5f5f5 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff9f9f9', endColorstr='#fff5f5f5', GradientType=0);
+  -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+.slider-selection.tick-slider-selection {
+  background-image: -webkit-linear-gradient(top, #89cdef 0%, #81bfde 100%);
+  background-image: -o-linear-gradient(top, #89cdef 0%, #81bfde 100%);
+  background-image: linear-gradient(to bottom, #89cdef 0%, #81bfde 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff89cdef', endColorstr='#ff81bfde', GradientType=0);
+}
+.slider-track-low,
+.slider-track-high {
+  position: absolute;
+  background: transparent;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+.slider-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #337ab7;
+  background-image: -webkit-linear-gradient(top, #149bdf 0%, #0480be 100%);
+  background-image: -o-linear-gradient(top, #149bdf 0%, #0480be 100%);
+  background-image: linear-gradient(to bottom, #149bdf 0%, #0480be 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff149bdf', endColorstr='#ff0480be', GradientType=0);
+  filter: none;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+  border: 0px solid transparent;
+}
+.slider-handle.round {
+  border-radius: 50%;
+}
+.slider-handle.triangle {
+  background: transparent none;
+}
+.slider-handle.custom {
+  background: transparent none;
+}
+.slider-handle.custom::before {
+  line-height: 20px;
+  font-size: 20px;
+  content: '\2605';
+  color: #726204;
+}
+.slider-tick {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-image: -webkit-linear-gradient(top, #f9f9f9 0%, #f5f5f5 100%);
+  background-image: -o-linear-gradient(top, #f9f9f9 0%, #f5f5f5 100%);
+  background-image: linear-gradient(to bottom, #f9f9f9 0%, #f5f5f5 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff9f9f9', endColorstr='#fff5f5f5', GradientType=0);
+  -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  filter: none;
+  opacity: 0.8;
+  border: 0px solid transparent;
+}
+.slider-tick.round {
+  border-radius: 50%;
+}
+.slider-tick.triangle {
+  background: transparent none;
+}
+.slider-tick.custom {
+  background: transparent none;
+}
+.slider-tick.custom::before {
+  line-height: 20px;
+  font-size: 20px;
+  content: '\2605';
+  color: #726204;
+}
+.slider-tick.in-selection {
+  background-image: -webkit-linear-gradient(top, #89cdef 0%, #81bfde 100%);
+  background-image: -o-linear-gradient(top, #89cdef 0%, #81bfde 100%);
+  background-image: linear-gradient(to bottom, #89cdef 0%, #81bfde 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff89cdef', endColorstr='#ff81bfde', GradientType=0);
+  opacity: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 body {
     background-color: white;color:red;
     font-family: 'Aladin';
@@ -140,7 +543,9 @@ hr {
   background: white;
 }
 /*  --------------------- For Buttons  -------------------------------  */
+
 /*source:https://codepen.io/yuhomyan/pen/OJMejWJ*/
+
 button {
   margin: 20px;
 }
@@ -197,6 +602,7 @@ background-image: linear-gradient(315deg, #1fd1f9 0%, #b621fe 74%);
     inset -4px -4px 6px 0 rgba(255,255,255,.5),
     inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
 }
+
 
 /* 5 */
 .btn-5 {
@@ -325,6 +731,7 @@ background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 
 
 
 
+
 @-webkit-keyframes shiny-btn1 {
     0% { -webkit-transform: scale(0) rotate(45deg); opacity: 0; }
     80% { -webkit-transform: scale(0) rotate(45deg); opacity: 0.5; }
@@ -401,6 +808,17 @@ background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
   -moz-transform: rotateX(-90deg);
   transform: rotateX(-90deg);
 }
+
+.spinner_at_top{
+	position:fixed;
+	width:60px;
+	height:60px;
+	right:45vw;
+	top:5px;
+	border-radius:50px;
+	margin: auto;
+
+}
 /* ------------------------------- -------------------------------  */
 </style>
 <style>
@@ -418,7 +836,52 @@ background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
 </head>
 <body>
 
+<div id='floating_spinner' class="spinner_at_top spinner-border text-info mx-auto" role="status" style="display:none;background-color:'white';">
+  <span class="visually-hidden">Loading...</span>
+</div>
+
+
 <script>
+function update_comments(commentss){
+  console.log('\n\nupdating_comments\n\n');
+  console.log('comments:'+commentss);
+  //console.log(comments[0].username);
+  
+  let original_div = document.getElementById('sample_comment_container');
+  original_div.textContent='';
+  let user_div = document.getElementById('comment_username_template');
+  let comment_div = document.getElementById('comment_body_template');
+  
+  //updating comments length.
+  document.getElementById('no_of_comments').textContent = 'Comments (' + comments.length + ')';
+  //console.log('\n\nDisplaying comments\n');
+  for (comment of comments){
+    
+    let clone_user_div = user_div.cloneNode(true);
+    clone_user_div.id = 'clone_user_div';
+    clone_user_div.textContent='';
+    
+    let h1 = document.createElement('h1');
+    clone_user_div.appendChild(h1);
+    h1.textContent = comment.fields.username;
+    
+    
+    let clone_comment_div = comment_div.cloneNode(true);
+    clone_comment_div.id = 'clone_comment_div';
+    clone_comment_div.textContent='';
+    
+    let h4=document.createElement('h4');
+    clone_comment_div.appendChild(h4);
+    h4.textContent = comment.fields.body;
+    
+    original_div.appendChild(clone_user_div);
+    original_div.appendChild(clone_comment_div);
+
+  }
+  
+  
+}
+
 function display_message(message){
   console.log('\n\n-----------------Message:-----------------\n'+ message + '-----------------------------------------');
 }
@@ -434,6 +897,15 @@ function get_category(category){
     
   var jokes_stack;
   var stack_pointer;
+  var batch;
+  function store_and_display(joke){
+    console.log(joke);
+    
+  }}
+  
+function get_category(category){
+  console.log('Sending data of category: ' + category);
+    
       //Ajax to get all comments
   $.ajax({
     
@@ -442,19 +914,29 @@ function get_category(category){
     data: {'category':category},
     success: function(response) {
       console.log("\n\nCategory data Successfully recived.\n");
+
       console.log( response['jokes'] );
       
       window.jokes_stack = JSON.parse(response['jokes']);
+      window.current_category = response['category'];
+      
       window.stack_pointer = 0;
       display_message('getting jokes data');
+      
+      document.getElementById('current_category').textContent = current_category;
       nextJoke();
-      batch += 1
+      window.batch += 1;
       //console.log('jokes_stack:'+jokes_stack);
       //store_and_display(jokes_stack);
       var category = response['category'];
       
       
       
+
+      console.log( response );
+      var jokes_stack = response['jokes'];
+      var current_category = response['category'];
+
       //displayJokes(response);
     
     }, error: function (response) {
@@ -488,9 +970,14 @@ function display_joke(joke, category='general'){
     body.textContent = joke.fields.body;
 }
 
+
 function nextJoke(id=0, category='general'){
-  console.log('For next joke, current_joke_id:'+id);
-  
+  console.log('For next joke, current_joke_id:'+id+category);
+
+  //showing spinner
+  document.getElementById('floating_spinner').style.display='block'; 
+//contracting category_div
+  document.getElementById('category_div').style.display='none';
   
     //To get jokes from jokes homepage initially.
   if (typeof stack_pointer == 'undefined' || stack_pointer === jokes_stack.length || typeof jokes_stack == 'undefined'){
@@ -500,16 +987,23 @@ function nextJoke(id=0, category='general'){
     
   } else{
     let joke = jokes_stack[stack_pointer];
+    //console.log(joke);
     stack_pointer = stack_pointer + 1;
     
-    console.log('nextJoke: '+joke);
-    display_joke(joke, category);
+    console.log('\n\n\nnextJoke: '+joke);
+    display_joke(joke, current_category);
+    
+    // hiding loading spinner
+    document.getElementById('floating_spinner').style.display='none';
+    
+    //console.log('\n\n\njoke_id:'+getComments);
+    getComments(joke.pk);
   }
 }
 
   
   
-function previousJoke(id, category='general'){
+function previousJoke(category='general', id=0){
   console.log('For previous, joke current_joke_id:'+id);
     //To get jokes from jokes homepage initially.
   
@@ -525,12 +1019,227 @@ function previousJoke(id, category='general'){
     } else if(stack_pointer==0){
     }  else{
       let joke = jokes_stack[ stack_pointer - 1 ];
-      console.log('previousJoke: '+joke);
+      //console.log('previousJoke: '+joke);
       display_joke(joke, category);
+      getComments(joke.pk);
     }
-  }
+  }}
+var comments;
+function getComments(id) {
+  //Ajax to get all comments
+
+  document.getElementById('sample_comment_container').textContent = '';
+  
+  let spinner = document.getElementById('spinner');
+  clone_spinner = spinner.cloneNode(true);
+  clone_spinner.style.display = 'block';
+  
+  let comment_div = document.getElementById('no_of_comments');
+    //comment_div.textContent = 'Comments: ';
+    comment_div.appendChild(clone_spinner);
+  $.ajax({
+    
+    type:'GET',
+    url:"{% url 'comments' %}",
+    data: {'joke_id':id, 'which_jokes':'jokes'},
+    success: function(response) {
+    //console.log(response);
+    window.comments = JSON.parse(response['comments']);
+    console.log(comments);
+    update_comments(comments)
+    
+    /*//To delete previous comments to replace with updated list of comments
+    let commentCard = document.getElementById('comment_main_' + id).querySelector('.display-comments')
+    if (commentCard!==null){
+    commentCard.remove();
+    }
+    
+    
+    var instance = JSON.parse(response["comments"]);
+    
+    comments=[]
+    try{
+    for (i=0; i<instance.length; i++) {
+    comments.push(instance[i].fields.body)
+    //console.log(instance[i].fields.body);
+    //return 'hello';
+    }
+    //console.log(instance);
+    
+    user = instance[0].fields.user
+    
+    //console.log(user)
+    console.log(comments)
+    AppendComment(id, comments, user);
+    //console.log('instance[0]: ' + instance[0].fields.body + 'instance.length: '+instance.length)
+    
+    //var jokes = instance[0]["fields"];
+    
+    } catch(err) {
+      
+      //AppendComment(id);
+      }
+    //console.log('her');*/
+    
+    }, error: function (response) {
+         console.log(response);
+         //return 'her';
+       }
+    
+  })
+  //console.log($.ajax['success'])
+  //console.log(all_comments);
+  //return all_comments;
 }
 
+
+
+
+function submitComment(id) {
+  if (typeof(category)==='undefined'){
+  var category='none';
+  }
+  comment = document.getElementById('comment_' + id).value;
+  console.log('comment:'+comment + '  id:' +id);
+  $.ajax({
+    type:'POST',
+    url:"{% url 'save_new_jokes_comment' %}",
+    data: {
+      'joke_id' : id,
+      'comment' : comment, csrfmiddlewaretoken: '{{ csrf_token }}',
+      'category':String(category),
+      
+    },
+    
+    success: function(response) {
+    
+
+    
+    // Clearing comment form after submission
+    document.getElementById('comment_' + id).value='';
+    console.log('comment sent');
+
+    //document.getElementById("comment_main_" + id).remove();
+    
+
+    
+    getComments(id);
+    
+    
+    }, error: function (response) {
+         console.log(response);
+         return 'her';
+       }
+    
+  })
+}
+
+function Love(jokeId=0){
+  //var loves = document.getElementsByClassName("love-icon");
+  //var i;
+  console.log('Loving:'+jokeId);
+  //for (i=0; i < loves.length; i++ ){
+    //love[i].addEventListener("click", function() {alert('I want Her');}
+    
+    var jokeDiv = document.getElementById(jokeId);
+      //console.log('div : '+ jokeDiv.id);
+      //loveIcon = jokeDiv.querySelector('.love-icon');
+      
+      
+      loveIcon = document.getElementById('love_icon_'+jokeId)
+      
+    //loveIcon.onclick = function(){
+      
+      //console.log(loveIcon);
+      //var loveIcon = testContainer.querySelector(.String(jokeId));
+      if(loveIcon.textContent == '♥️')
+        {loveIcon.textContent='♡';
+        //console.log('ajax unvote id:'+jokeId);
+        /*Code for like*/
+        var vote = '';
+      }
+      else
+        {loveIcon.textContent='♥️';
+        console.log('Ajax vote Id:' + jokeId);
+        var vote = true;}
+      
+      category = document.getElementById("categorySendForm").name;
+      $.ajax({
+         type: 'get',
+         url: "{% url 'vote' %}",
+         data: {"joke_id": jokeId, 'vote':vote, 'category':String(category)},
+         success: function (response) {
+         //var instance = JSON.parse(response["message"]);               
+         console.log(response['message']);
+         //console.log('category: '+String(category))
+         }, error: function (response) {
+                  console.log(response)
+              }
+          
+          
+      } )
+ 
+    
+  
+};
+
+function isValid(mail) 
+{
+ if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail))
+  {
+    return (true)
+  }
+    /*alert("You have entered an invalid email address!")*/
+    return (false)
+}
+
+function SendComment(id) {
+  comment = document.getElementById('feedbackInput').value;
+  email = document.getElementById('emailInput').value;
+  username = document.getElementById('usernameInput').value;
+  joke_id = parseInt(window.location.href.split('/').reverse()[1])
+  
+  if (isValid(email) || email === ''){
+  console.log('valid')
+
+  
+  
+  console.log('comment: '+comment + ', email: ' + email + ', user: ' + username)
+  //console.log('comment:'+comment + '  id:' +id);
+  $.ajax({
+    type:'POST',
+    url:"{% url 'save_new_jokes_comment' %}",
+    data: {
+      'comment':comment,
+      'username':username,
+      'email': email,
+      'joke_id' : joke_id,
+      csrfmiddlewaretoken: '{{ csrf_token }}'
+      
+    },
+    
+    // To clear comment form after submission
+    success: function(response) {
+    document.getElementById('feedbackInput').value='';
+    document.getElementById('emailInput').value='';
+    document.getElementById('usernameInput').value='';
+    console.log('Feedback Saved');
+    
+    
+    //username = response['feedbacks'][0][0];
+    //feedback = response['feedbacks'][0][1];
+    ///append_feed(username, feedback);
+    }, error: function (response) {
+         console.log(response);
+         return 'her';
+       }
+    
+  })
+}
+ else {
+    displayMessage("Invalid email address");
+  }
+  }
 </script>
 
 {% for joke in jokes %}
@@ -538,7 +1247,7 @@ function previousJoke(id, category='general'){
   <script>
     store_and_display("{{joke}}");
     console.log('joke: ' + "{{joke}}");
-    
+
   </script>
 
 <!--
@@ -578,6 +1287,7 @@ function previousJoke(id, category='general'){
   {% endfor %}
   </section>
 </div>  
+
 <!--
 <button type="button" class="btn btn-default btn-lg" style="background:white;" onClick="toggleDisplay('category_div');">
   <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Categories
@@ -585,21 +1295,31 @@ function previousJoke(id, category='general'){
 
 <button class="custom-btn btn-6" onClick="toggleDisplay('category_div');"><span>Read More</span></button>-->
   
-<button class="custom-btn btn-5 mx-auto d-block" onClick="toggleDisplay('category_div');"><span>Categories</span></button>
+<span class="custom-btn btn-5 mx-auto d-block text-center" onClick="toggleDisplay('category_div');"><span>Categories</span></span>
+<span id="current_category" style="backgroung:red;fonit-color:white;">current_category:category</span>
+  
+  
+
+
+  
+  
+  
+  
+  
   
   
   
 
   
   
-<div class="rounded my-5 mx-3 text-center" style="background:#2F343F;height:90vh;">
+<div class="rounded my-5 mx-3 text-center" style="background:#2F343F;height:100vh;">
 
 
 
   <h1><b class="heading" id="joke_heading"> {{joke.title}}<!--Hello World--> </b></h1>
   <hr class="rounded m-2">
-  <div class="text_body p-1" id="joke_body" style="    display: block;
-    display: -webkit-box;
+  
+  <div class="text_body p-1" id="joke_body" style="display: block;display: -webkit-box;
     width:100%;
     /*max-width: 400px;*/
     height: 70%;
@@ -672,19 +1392,198 @@ Ooh, you keep me coming for ya-->
 
   </div>
 <hr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Inspiration:https://seiyria.com/bootstrap-slider/#example-26-->
+<label for="customRange3" class="form-label m-3" style="color:white;font-weight: bold;"><h4> Rate  </h4></label>
+<input type="range" class="form-range"  data-slider-min="0"  data-slider-max="5" data-slider-step="0.01" data-slider-value="0" id="customRange" >
+
+<script>
+ slider = document.getElementById('customRange');
+
+ //slider.onclick = function(){console.log(slider.value);tooltip: 'always';}
+ var slider2 = new Slider("#customRange", {
+        //tooltip: 'always'
+      });
+      console.log(slider2.value);
+</script>
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <button class="custom-btn btn-9 float-end" onclick="nextJoke({{joke.id}});"> <span><span>next</span></span> </button>
 <button class="custom-btn btn-12 float-end" onclick="previousJoke({{joke.id}});"><span> recent </span><span> previous </span></button>
 
+
+
+
+
 </div>
+<!--  ------------------------ Comment Form ------------------------  -->
+<form action='' class='' method='POST' id="feedbackForm">
+  {% csrf_token %}    
+  
+  <textarea class="form-control col-md-4 mx-2 " rows="5" placeholder="Comment" name="Comment" id="feedbackInput" required></textarea>
+
+<div class="row g-3 mt-2 mx-auto">
+
+
+
+    <div class="form-floating col-md-4">
+    <input type="text" class="form-control" id="usernameInput" name="username" placeholder="user" required>
+    <label for="floatingInput"> Username </label>
+    <div id="emailHelp" class="form-text"> Please pick a username. </div>
+  </div>
+
+    
+    <div class="form-floating col-md-4">
+    <input type="email" class="form-control mx-auto" name="email" id="emailInput" placeholder="name@example.com">
+    <label for="floatingInput">Email address (optional)</label>
+    <div id="emailHelp" class="form-text">(optional) We'll never share your email with anyone else.</div>
+    </div>
+  
+  
+  
+  
+
+</div>
+
+  
+</form>
+    <div class="col-12">
+      <button class="btn btn-primary mt-4 ms-2" onClick="SendComment();"> Save </button>
+    </div><br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ----------------- List Comments ------------------------ -->
+</div>
+<h1 style="background-color:black;color:green;" id="no_of_comments"><b>Comments ({{joke.jokecomments_set.all|length}})</b></h1>
+
+<div id="sample_comment_container">
+  {% for comment in joke.jokecomments_set.all %}
+    
+    
+    <div class="mt-5 mx-3 rounded col-3 mb-2" style="font-weight:bold;background-color:white;" id="Saved_comment_user"><h1>{{ comment.username.title }}</h1>
+    </div>
+
+    <div class="mt-auto rounded mx-3 mb-3" style="background-color:white;" id="Saved_comment_body"><h4>{{ comment.body.title }}</h4>
+    </div>
+
+  {% endfor %}
+</div>  
 {% endfor %}
 
 
+<!-- ----------------- Comments template ------------------------ -->
 
+    <div id="sample_comment_container">
+    <div class="mt-5 mx-3 rounded col-3 mb-2" style="font-weight:bold;background-color:white;" id="comment_username_template"><h1>{{ comment.username.title }}</h1>
+    </div>
 
+    <div class="mt-auto rounded mx-3 mb-3" style="background-color:white;" id="comment_body_template"><h4>{{ comment.body.title }}</h4>
+    </div>
+  </div>
 
-
-
-
+<!-- ----------------- Spinner template ------------------------ -->
+  <div class="spinner-border text-info" id='spinner' role="status" style="display:none;">
+    <span class="sr-only">Loading...</span>
+  </div>
 <!--
 
 <section class="border p-4 d-flex justify-content-center mb-4 flex-wrap" style="background:white;">
@@ -776,5 +1675,12 @@ Ooh, you keep me coming for ya-->
 <br><br>
 </section>
 -->
+
+
+<!--  ---------------------------------------------------------  -->
+<!--  ------------------------ For Comments --------------------  -->
+<!--  ---------------------------------------------------------  -->
+
+
 </body>
 </html>

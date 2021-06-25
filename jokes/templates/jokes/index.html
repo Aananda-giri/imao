@@ -11,8 +11,24 @@
 <!-- For Bing Webmaster -->
 <meta name="msvalidate.01" content="796C5390EDBEB82180F4A5850D7F73C8" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- For yandex Webmaster -->
+<meta name="yandex-verification" content="e20bcde1da252597" />
+
+
+<!-- For dark mode & making website responsive (mobile-friendly) -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+<!-- Clarity tracking code for https://imao.herokuapp.com/ -->
+<script>
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "7a8eyiye1y");
+</script>
+
+<!-- For jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <!-- /search2-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -29,12 +45,6 @@
 <link href='https://fonts.googleapis.com/css?family=Aladin' rel='stylesheet'>
 
 <script src="{% static 'jokes/script.js' %}"></script>
-
-<!-- For dark mode & making website responsive (mobile-friendly) -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-
-<!-- For jquery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <style>
 body {  background-color: white;color:red;
@@ -666,7 +676,7 @@ function getComments(id) {
     
     type:'GET',
     url:"{% url 'comments' %}",
-    data: {'joke_id':id},
+    data: {'joke_id':id, which_jokes:'jokes'},
     success: function(response) {
     
     //To delete previous comments to replace with updated list of comments
