@@ -13,7 +13,10 @@ from .models import WockaJokes, Comments, ShortedList, AbsurdlyBigJokes
 from user.models import User
 #from user.views import categoriesView
 from .forms import UploadJokeForm, SearchForm, sendMailForm
+
+from rest_framework.decorators import api_view
 import json
+import random
 
 from django.http import JsonResponse
 from django.core import serializers
@@ -626,5 +629,15 @@ def get_category(request, category=None):
         
         template = 'jokes/temaplate.html'
         return render(request, template, {'jokes':jokes, 'category':category})
+
+
+@api_view(["GET"])
+def random_joke_api(string):
+    try:
+        joke = Jokes.objects.using('jokes').all().order_by('-rating')[random.randint(0,10000)]
+        j={'title':joke.title, 'body':joke.body, 'author':joke.author}
+        return JsonResponse(j, status=200)
+    except ValueError as e:
+        return Response(e.argss[0], status.HTTP_400_BAD_REQUEST)
 
 

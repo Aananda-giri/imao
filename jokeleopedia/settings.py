@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'hotornot.apps.HotornotConfig',
     'django.contrib.sitemaps',  # For sitemaps
     'django.contrib.sites',
+    'rest_framework',
 ]
 SITE_ID=1
 

@@ -889,6 +889,8 @@ function display_message(message){
 
   
 function get_category(category){
+  //showing spinner
+  document.getElementById('floating_spinner').style.display='block';
   console.log('Sending data of category: ' + category);
   if ( typeof(batch)=='undefined' ){
     var batch=0;
@@ -904,6 +906,9 @@ function get_category(category){
   }}
   
 function get_category(category){
+  //showing spinner
+  document.getElementById('floating_spinner').style.display='block';
+  
   console.log('Sending data of category: ' + category);
     
       //Ajax to get all comments
@@ -957,8 +962,12 @@ function display_joke(joke, category='general'){
     //window.history.pushState({path:newurl},'',newurl);
     
     
+    //To change the current url while displaying next joke
     var newUrl = window.location.protocol + "//" + window.location.host + '/jokes/'+joke.pk+'/';
     window.history.pushState({path:newUrl},'',newUrl);
+    
+    //To change page title
+    document.title = joke.fields.title;
     
     display_message('new_url: '+newUrl);
     display_message('joke:' + joke.fields.body + 'title:' + joke.fields.title);
