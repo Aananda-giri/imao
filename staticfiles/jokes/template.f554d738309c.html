@@ -1,0 +1,600 @@
+<!-- To do 
+
+>> Next joke from memory -> change current url without reloading
+>> Implement next joke in given Category 
+>> Get more data at the end of current jokes list
+>> Implement previous and next buttons
+>> Replace previous and next buttons with left/right key + scroll
+
+
+>>   Glossy Webpage : https://stackoverflow.com/questions/33359979/create-a-glossy-light-effect-using-css/33360150
+
+>>   Like(like_facebook's), comment, share emojis
+>>   Fix the webpage's look
+>>   new url for each joke
+
+
+sticky-notes:
+Working Upload profile pic->BrainMap
+
+1. proper website page (Glossy + well organized +good looking)
+
+3. homepage get multiple jokes and show them one at a time
+
+4. categorize beautifully
+
+5. Scroll down animated helper
+
+<!--For search icon-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<title>Largest collection of best jokes on the internet</title>
+
+<!--Define keywords for search engines:-->
+<meta name="keywords" content=" joke, {{jokes.0.title}}, {{jokes.0.title}} ">
+
+<meta name="description"  content="joke:{{jokes.0.body}}">
+
+<!-- For Google Search Console -->
+<meta name="google-site-verification" content="B3UpNAzKeG7ioT5yzNsbyQBGv9aXiBRHYC1f50Veals" />
+
+<!-- For Bing Webmaster -->
+<meta name="msvalidate.01" content="796C5390EDBEB82180F4A5850D7F73C8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- /search2-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<!-- For accesssing css in django-->
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'person/style_t2.css' %}">
+
+<!--   For bootstrap   -->
+<link rel="stylesheet" type="text/css" href="{% static 'jokes/bootstrap.min.css' %}">
+
+<!-- Bootstrap-5 css-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<!--for google font Aladin:-->
+<link href='https://fonts.googleapis.com/css?family=Aladin' rel='stylesheet'>
+
+<script src="{% static 'jokes/template_1_script.js' %}"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'jokes/template_1_style.css' %}">
+
+<!-- For dark mode & making website responsive (mobile-friendly) -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<!-- For jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style>
+body {
+    background-color: white;color:red;
+    font-family: 'Aladin';
+    font-family: 'Brush Script MT',cursive;
+    background: -webkit-linear-gradient(left, #FF0007, #FF00B4, #7700FF, #6600FF, #7700FF, #FF00B4);
+    /*background: -webkit-linear-gradient(left, #3931af, #00c6ff);*/
+}
+
+.dark-mode {
+  background-color: #18191A;/*<!--For dark mode. background co;or of heading:#242526-->*/
+  color: white;
+}
+
+/* For Clickable categories */
+.GFG { 
+  background-color: white; 
+  border: 2px solid black; 
+  background-color: white;
+  color:green;
+  padding: 5px 10px; 
+  text-align: center; 
+  display: inline-block; 
+  font-size: 20px; 
+  margin: 10px 10px; 
+  cursor: pointer; 
+} 
+
+.heading{
+  font-size: 35px;
+  color:white;
+}
+.text_body{
+  font-size: 25px;
+  color:black;
+}
+
+@media (max-width: @screen-xs) {
+    .heading{font-size: 10px;}
+}
+
+.hr_custom{
+  background-color:#ffffff;
+  height:20px;
+  width:100%;
+
+}
+hr {
+ 
+  top: 20px;
+  color:#ffffff;
+  background-color:#ffffff;
+  border: 5px solid #ffffff;
+  height: 0.1vh;
+  background: white;
+}
+/*  --------------------- For Buttons  -------------------------------  */
+button {
+  margin: 20px;
+}
+.custom-btn {
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+
+/* 9 */
+.btn-9 {
+  border: none;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.btn-9:after {
+  position: absolute;
+  content: " ";
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+   background-color: #1fd1f9;
+background-image: linear-gradient(315deg, #1fd1f9 0%, #b621fe 74%);
+  transition: all 0.3s ease;
+}
+.btn-9:hover {
+  background: transparent;
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.5),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+  color: #fff;
+}
+.btn-9:hover:after {
+  -webkit-transform: scale(2) rotate(180deg);
+  transform: scale(2) rotate(180deg);
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.5),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+}
+
+
+
+
+
+
+
+
+
+
+@-webkit-keyframes shiny-btn1 {
+    0% { -webkit-transform: scale(0) rotate(45deg); opacity: 0; }
+    80% { -webkit-transform: scale(0) rotate(45deg); opacity: 0.5; }
+    81% { -webkit-transform: scale(4) rotate(45deg); opacity: 1; }
+    100% { -webkit-transform: scale(50) rotate(45deg); opacity: 0; }
+}
+/* 12 */
+.btn-12{
+  position: relative;
+  right: 20px;
+  bottom: 20px;
+  border:none;
+  box-shadow: none;
+  width: 130px;
+  height: 40px;
+  line-height: 42px;
+  -webkit-perspective: 230px;
+  perspective: 230px;
+}
+.btn-12 span {
+  background: rgb(0,172,238);
+background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
+  display: block;
+  position: absolute;
+  width: 130px;
+  height: 40px;
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  border-radius: 5px;
+  margin:0;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+.btn-12 span:nth-child(1) {
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  -webkit-transform: rotateX(90deg);
+  -moz-transform: rotateX(90deg);
+  transform: rotateX(90deg);
+  -webkit-transform-origin: 50% 50% -20px;
+  -moz-transform-origin: 50% 50% -20px;
+  transform-origin: 50% 50% -20px;
+}
+.btn-12 span:nth-child(2) {
+  -webkit-transform: rotateX(0deg);
+  -moz-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+  -webkit-transform-origin: 50% 50% -20px;
+  -moz-transform-origin: 50% 50% -20px;
+  transform-origin: 50% 50% -20px;
+}
+.btn-12:hover span:nth-child(1) {
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  -webkit-transform: rotateX(0deg);
+  -moz-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+}
+.btn-12:hover span:nth-child(2) {
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+ color: transparent;
+  -webkit-transform: rotateX(-90deg);
+  -moz-transform: rotateX(-90deg);
+  transform: rotateX(-90deg);
+}
+/* ------------------------------- -------------------------------  */
+</style>
+<style>
+/* For Color While selection */
+::-moz-selection { /* Code for Firefox */
+  color: #03FF00;
+  background: none;
+}
+
+::selection {
+  color: #03FF00;
+  background: black;
+}
+</style>
+</head>
+<body>
+
+<script>
+  function store_and_display(joke){
+    console.log(joke);
+    
+  }
+  
+function get_category(category){
+  console.log('Sending data of category: ' + category);
+    
+      //Ajax to get all comments
+  $.ajax({
+    
+    type: 'GET',
+    url:"{% url 'get_category' %}",
+    data: {'category':category},
+    success: function(response) {
+      console.log("\n\nCategory data Successfully recived.\n");
+      console.log( response );
+      var jokes_stack = response['jokes'];
+      var category = response['category'];
+      //displayJokes(response);
+    
+    }, error: function (response) {
+         console.log('\n\n error in retrieving category data:');
+         console.log(response);
+         //return 'her';
+       }
+    
+  })
+
+}
+
+function nextJoke(id, category='general'){
+  console.log('For next joke, current_joke_id:'+id);
+  
+  if () {
+    get_category('general');
+  }
+  
+    //To get jokes from jokes homepage initially.
+  if (typeof stack_pointer == 'undefined') {
+    var  stack_pointer = 0;
+  }
+  
+  if (stack_pointer === jokes_stack.length || typeof jokes_stack == 'undefined'){
+    get_category(category);
+  }
+  
+  joke = jokes_stack[stack_pointer];
+}
+
+function previousJoke(id){
+  console.log('For previous, joke current_joke_id:'+id);
+    //To get jokes from jokes homepage initially.
+  
+  if (typeof stack_pointer == 'undefined') {
+    displayMessage('please select category');
+  }
+  
+}
+
+</script>
+
+{% for joke in jokes %}
+
+  <script>
+    store_and_display("{{joke}}");
+    console.log('joke: ' + "{{joke}}");
+  </script>
+
+<!--
+<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true" style="background:#2F343F;"></span> Menu
+ <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star
+
+<button type="button" class="btn btn-default" aria-label="Left Align" style="background:#2F343F;">
+  <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+</button>
+
+<button type="button" class="btn btn-default btn-lg">
+  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star
+</button>-->
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="my-5 p-2 text-center" id="category_div" style="background:#2F343F;display:none;color:white;font-size:2vw;">
+  <h3><b> Categories </b></h3>
+
+
+  
+  
+  <section class="border p-4 d-flex justify-content-center mb-4 flex-wrap" style="background:white;">
+  {% for category in categories %}
+  
+  
+<h5><span class="chipps rounded-pill p-2 mx-2" onClick="get_category('{{category.category}}');"> {{ category.category }} </span></h5>
+  {% endfor %}
+  </section>
+</div>  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+<div class="rounded my-5 mx-3 text-center" style="background:#2F343F;height:90vh;">
+
+<button type="button" class="btn btn-default btn-lg" style="background:white;" onClick="toggleDisplay('category_div');">
+  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Categories
+</button>
+
+  <h1><b class="heading"> {{joke.title}}<!--Hello World--> </b></h1>
+  <hr class="rounded m-2">
+  <div class="text_body p-1"  style="    display: block;
+    display: -webkit-box;
+    width:100%;
+    /*max-width: 400px;*/
+    height: 70%;
+    margin: 0 auto;
+    line-height: 1.2;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow: auto;
+    color:white;">
+    {{joke.body}}<!--
+I love it when you call me señorita
+I wish I could pretend I didn't need ya
+But every touch is ooh, la-la-la
+It's true, la-la-la
+Ooh, I should be running
+Ooh, you keep me coming for ya
+Land in Miami
+The air was hot from summer rain
+Sweat dripping off me
+Before I even knew her name, la-la-la
+It felt like ooh, la-la-la
+Yeah, no
+Sapphire moonlight
+We danced for hours in the sand
+Tequila sunrise
+Her body fit right in my hands, la-la-la
+It felt like ooh, la-la-la, yeah
+I love it when you call me señorita
+I wish I could pretend I didn't need ya
+But every touch is ooh, la-la-la
+It's true, la-la-la
+Ooh, I should be running
+Ooh, you know I love it when you call me señorita
+I wish it wasn't so damn hard to leave ya
+But every touch is ooh, la-la-la
+It's true, la-la-la
+Ooh, I should be running
+Ooh, you keep me coming for ya
+Locked in the hotel
+There's just some things that never change
+You say we're just friends
+But friends don't know the way you taste, la-la-la
+'Cause you know it's been a long time coming
+Don't you let me fall, oh
+Ooh, when your lips undress me
+Hooked on your tongue
+Ooh, love, your kiss is deadly
+Don't stop
+I love it when you call me señorita
+I wish I could pretend I didn't need ya
+But every touch is ooh, la-la-la
+It's true, la-la-la
+Ooh, I should be running
+Ooh, you know I love it when you call me señorita
+I wish it wasn't so damn hard to leave ya
+But every touch is ooh, la-la-la
+It's true, la-la-la (true, la-la)
+Ooh, I should be running
+Ooh, you keep me coming for ya
+All along I've been coming for ya (for ya)
+And I hope it meant something to ya (ooh)
+Call my name, I'll be coming for ya
+Coming for ya, coming for ya, coming for ya
+For ya
+For ya (oh, she loves it when I call)
+For ya
+Ooh, I should be running
+Ooh, you keep me coming for ya-->
+
+  </div>
+<hr>
+<button class="custom-btn btn-9 float-end" onclick="nextJoke({{joke.id}});"> <span><span>next</span></span> </button>
+<button class="custom-btn btn-12 float-end" onclick="previousJoke({{joke.id}});"><span> recent </span><span> previous </span></button>
+
+</div>
+{% endfor %}
+
+
+
+
+
+
+
+
+<!--
+
+<section class="border p-4 d-flex justify-content-center mb-4 flex-wrap" style="background:white;">
+      <div class="chip chip-outline btn-outline-primary" data-mdb-ripple-color="dark">
+        Primary
+
+        <i class="close fas fa-times"></i>
+      </div>
+      <div class="chip chip-outline btn-outline-secondary" data-mdb-ripple-color="dark">
+        Secondary
+
+        <i class="close fas fa-times"></i>
+      </div>
+      <div class="chip chip-outline btn-outline-success" data-mdb-ripple-color="dark">
+        Success <i class="close fas fa-times"></i>
+      </div>
+      <div class="chip chip-outline btn-outline-danger" data-mdb-ripple-color="dark">
+        Danger <i class="close fas fa-times"></i>
+      </div>
+      <div class="chip chip-outline btn-outline-warning" data-mdb-ripple-color="dark">
+        Warning <i class="close fas fa-times"></i>
+      </div>
+      <div class="chip chip-outline btn-outline-info" data-mdb-ripple-color="dark">
+        Info <i class="close fas fa-times"></i>
+      </div>
+      <div class="chip chip-outline btn-outline-light" data-mdb-ripple-color="dark">
+        Light <i class="close fas fa-times"></i>
+      </div>
+      <div class="chip chip-outline btn-outline-dark" data-mdb-ripple-color="dark">
+        Dark <i class="close fas fa-times"></i>
+      </div>
+    </section>
+    
+    
+    
+    
+    <section class="border p-4 d-flex justify-content-center mb-4 flex-wrap" style="background:white;">
+
+<div class=" btn-outline-primary" data-ripple-color="dark">
+  Primary
+
+  <i class="close fas fa-times"></i>
+</div>
+<div class="chip chip-outline btn-outline-secondary" data-ripple-color="dark">
+  Secondary
+
+  <i class="close fas fa-times"></i>
+</div>
+<div class="chip chip-outline btn-outline-success" data-ripple-color="dark">
+  Success <i class="close fas fa-times"></i>
+</div>
+<div class="chip chip-outline btn-outline-danger" data-ripple-color="dark">
+  Danger <i class="close fas fa-times"></i>
+</div>
+<div class="chip chip-outline btn-outline-warning" data-ripple-color="dark">
+  Warning <i class="close fas fa-times"></i>
+</div>
+<div class="chip chip-outline rounded-pill btn-outline-info" data-ripple-color="dark" style="background:red;">
+  Info <i class="close fas fa-times"></i>
+</div>
+<div class="chip chip-outline rounded-pill btn-outline-light" data-ripple-color="dark">
+  Light <i class="close fas fa-times"></i>
+</div>
+<div class="badge chip badge-pill bg-primary btn-outline-dark" data-ripple-color="dark" style="background:red;">
+  Dark 
+</div>
+</section>
+
+
+<section style="font-size:5vw;">
+<span class="badge badge-pill badge-primary" style="color:red;>Primary</span>
+<span class="badge badge-pill badge-secondary">Secondary</span>
+<span class="badge badge-pill badge-success">Success</span>
+<span class="badge badge-pill badge-danger">Danger</span>
+<span class="badge badge-pill badge-warning">Warning</span>
+<span class="badge badge-pill badge-info">Info</span>
+<span class="badge badge-pill badge-light">Light</span>
+<span class="badge badge-pill badge-dark">Dark</span>
+</section>
+
+<span class="badge rounded-pill bg-primary btn-outline-dark"><h1>Primary</h1></span><br><br><br>
+
+
+<section class="border p-4 d-flex justify-content-center mb-4 flex-wrap" style="background:white;">
+<h5><span class="chipps rounded-pill p-2 m-2" onclick="getCategory('{{category}}');"> Custom Chips </span></h5>
+
+<h5><span class="chipps rounded-pill p-2 m-2" style="background:#030303;color:white"><b> Chips selected </b></span></h5>
+<h5><span class="chipps rounded-pill p-2 m-2" style="color:black;color:black;background:#E5E5E5;"> Chips hover </span></h5>
+<br><br>
+</section>
+-->
+</body>
+</html>
+

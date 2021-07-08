@@ -622,7 +622,7 @@ def get_category(request, category=None):
     #return HttpResponse('\n Received via Json. \n')
         jokes = serializers.serialize('json', jokes, )
         #print(serializers.serialize('json', [jokes[0]], ))
-        return JsonResponse({'jokes':jokes, 'category':category},status=200)
+        return JsonResponse({'jokes':jokes, 'category':category}, status=200)
     
     else:
         #return HttpResponse('\n Received via URL. \n')
@@ -632,12 +632,32 @@ def get_category(request, category=None):
 
 
 @api_view(["GET"])
-def random_joke_api(string):
+def random_joke_api(request):
     try:
         joke = Jokes.objects.using('jokes').all().order_by('-rating')[random.randint(0,10000)]
-        j={'title':joke.title, 'body':joke.body, 'author':joke.author}
-        return JsonResponse(j, status=200)
+        title = joke.title
+        if title.strip()=='':
+            title = joke.category
+        return JsonResponse({'title':title, 'body':joke.body, 'author':joke.author}, status=200)
     except ValueError as e:
         return Response(e.argss[0], status.HTTP_400_BAD_REQUEST)
 
-
+@api_view(["GET"])
+def list_jokes_api(request, no_of_jokes):
+    if int(no_of_jokes) < 10:
+        no_of_jokes = int(no_of_jokes)
+    else:
+        no_of_jokes = 10
+    
+    try:
+        jokes = Jokes.objects.using('jokes').all().order_by('-rating')[:no_of_jokes]
+        j2=[]
+        for joke in jokes:
+            title = joke.title
+            if title.strip()=='':
+                title = joke.category
+            j2.append({'title':joke.title, 'body':joke.body, 'author':joke.author})
+        #jokes = serializers.serialize('json', j2, )
+        return JsonResponse({'jokes':j2}, status=200)
+    except ValueError as e:
+        return Response(e.argss[0], status.HTTP_400_BAD_REQUEST)

@@ -36,7 +36,8 @@ urlpatterns = [
     path('<int:joke_id>/', views.each_joke, name='first_template'),
     path('category/', views.get_category, name = 'get_category'),
     path('category/<str:category>/', views.get_category, name = 'get_category'),
-    path('joke_api/', views.random_joke_api, name = 'api/random'),
+    path('api/random/', views.random_joke_api, name = 'joke_api'),
+    path('api/<int:no_of_jokes>/', views.list_jokes_api, name = 'list_jokes_api'),
 ]
 
 

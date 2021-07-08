@@ -1,0 +1,19 @@
+/*  --------------------  Implement for selected category  ----------------  */
+/*<h5><span class="chipps rounded-pill p-2 m-2" style="background:#030303;color:white"><b> Chips selected </b></span></h5>*/
+
+
+.chipps{
+color:green;
+background-color:#F2F2F2;
+/*overflow:auto;*/
+border: 1px solid black;
+}
+
+.chipps:hover{
+color:black;
+background:#E5E5E5;
+/*border:2px solid black;*/
+}
+
+
+
