@@ -197,7 +197,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'sbcwfsyk',
         'USER': 'sbcwfsyk',
-        'PASSWORD': ,
+        'PASSWORD': 'T7whneqWgyy9XiFf-SLFiJIqubfK_2Go',
         'HOST': 'john.db.elephantsql.com',
         'PORT': '5432',
     },
