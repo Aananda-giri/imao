@@ -6,7 +6,8 @@ from . import views
 urlpatterns = [
     # ex: /polls/
     #path('<int:joke_page>/', views.index, name='jokes_with_page_no'),
-    path('', views.index, name='jokes'),
+    path('index/', views.index, name='jokes'),
+    path('', views.each_joke, name='each_joke'),
     # ex: /polls/5/
     #path('<int:joke_id>/', views.joke_by_id, name='joke_by_id'),
     # ex: /polls/5/results/

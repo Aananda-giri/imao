@@ -34,11 +34,12 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('jokes.urls')),
     path('jokes/', include('jokes.urls')),
     path('vote/', j, name='vote'),
     #path('ariesap', include('ariesap.urls')),
     #path('memmes/', include('memmes.urls')),
-    path('', include('memes.urls')),
+    path('memes/', include('memes.urls')),
     path('user/', include('user.urls')),
     #path('searchtest/', include('searchtest.urls')),
     path('register/', views.Join, name='join'),    
@@ -54,7 +55,7 @@ urlpatterns = [
     
     path('accounts/', include('django.contrib.auth.urls')),
     path('home', TemplateView.as_view(template_name='home.html'), name='home'),
-    path('', index, name='index'),
+    #path('', index, name='index'),
     path('chit-chat/', include('chat.urls')),
     path('cos/',include('cos.urls')),
     path('tu/',include('hotornot.urls')),

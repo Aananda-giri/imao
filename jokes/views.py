@@ -560,7 +560,7 @@ def feedback(request):
         #print(feedbacks)
         return render(request, 'jokes/feedback.html', {'feedbacks':feedbacks})
 
-def each_joke(request, joke_id = None):
+def each_joke(request, joke_id = 1):
     print('\n\n\n'+str(joke_id) + '\n\n\n')
     #jokes = WockaJokes.objects.all()[0]
     if request.method == 'GET':

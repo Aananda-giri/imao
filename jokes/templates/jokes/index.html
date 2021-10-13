@@ -5,18 +5,9 @@
 <title>Largest collection of best jokes on the internet</title>
 <meta name="description"  content="Largest collection of over 15,000 funniest jokes you have ever read neatly categorized in over 25 categories">
 
-<!-- For Google Search Console -->
-<meta name="google-site-verification" content="B3UpNAzKeG7ioT5yzNsbyQBGv9aXiBRHYC1f50Veals" />
+<!-- For google analytics, different webmasters and bootstrap5 -->
+{% include "google_analytics.html" %}
 
-<!-- For Bing Webmaster -->
-<meta name="msvalidate.01" content="796C5390EDBEB82180F4A5850D7F73C8" />
-
-<!-- For yandex Webmaster -->
-<meta name="yandex-verification" content="e20bcde1da252597" />
-
-
-<!-- For dark mode & making website responsive (mobile-friendly) -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
 <!-- Clarity tracking code for https://imao.herokuapp.com/ -->
 <script>
@@ -27,8 +18,6 @@
     })(window, document, "clarity", "script", "7a8eyiye1y");
 </script>
 
-<!-- For jquery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <!-- /search2-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -49,7 +38,7 @@
 <style>
 body {  background-color: white;color:red;
     font-family: 'Aladin';font-size: 26px;
-    <!--HTML font: font-family: 'Brush Script MT',cursive;font-size: 26px;-->}
+    /*<!--HTML font: font-family: 'Brush Script MT',cursive;font-size: 26px;-->*/}
 
 .dark-mode {
   background-color: #18191A;/*<!--For dark mode. background co;or of heading:#242526-->*/
@@ -302,7 +291,7 @@ body {  background-color: white;color:red;
 <!-- ############################################################# -->
 
 <!-- ###############trigger on scrolling to specific spot############# -->
-<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!--
 <script>
 
 var element_position = $('#scroll-to').offset().top;

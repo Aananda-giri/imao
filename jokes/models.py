@@ -267,3 +267,5 @@ class JokeComments(models.Model):
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
         #return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
+
+
