@@ -1,0 +1,64 @@
+{% include "base.html"%}
+<!DOCTYPE html lang="en-US">
+<html>
+<head>
+<title>API</title>
+<style>
+
+
+.dark-mode {
+  background-color: #18191A;/*<!--For dark mode. background co;or of heading:#242526-->*/
+  color: white;
+}
+
+/* ------------------------------- -------------------------------  */
+</style>
+<body>
+
+<div class="card border-info mb-3 mx-auto mt-3" style="max-width: 30rem;">
+  <div class="card-header"><h1><b> Imao Jokes API?</h1></b></div>
+  <div class="card-body">
+    <h5 class="card-title p-2"><b>The Imao API uses a RESTful JSON interface. Requests to the API are not rate limited and free of charge and current features of api will always remain free of charge even if we added premium features in future.
+    
+ </b></h5>
+    <p class="card-text"><b><h2></h2><br>
+    
+    
+    </p>
+    <div class="card-footer bg-transparent border-success"> <h2 class='p-2 m-2'><b>Get Jokes </b></h2>
+     Currently there are about 15,000 handpicked jokes from across internet and we are adding more very soon.<br>
+     
+     <p class="mt-5">
+     <li class="mb-2"><h5 class='p-2 m-2'><b>To get one random joke</b></li></h5>
+     URL : <a href="http://imao.herokuapp.com/api/jokes/random">http://imao.herokuapp.com/api/jokes/random</a>
+     <br>Method : GET
+    
+     <li class="mt-5">h5 class='p-2 m-2'><b>To get 'n' random jokes</b></h5><br>
+     URL : http://imao.herokuapp.com/api/jokes/n
+     <br>Method : GET
+     </li><br>
+    
+    e.g.<a href="http://imao.herokuapp.com/api/jokes/5">http://imao.herokuapp.com/api/jokes/5</a><br>
+    (to get 5 random jokes)
+    
+    </p>
+     
+     </div>
+    <div class="card-footer bg-transparent border-success mt-5 m-2 p-3"><br>  Home: <a href="http://imao.herokuapp.com/"> Jokes_Home </a> </div>
+    <!--<br> <div class="ms-2 p-3"> Memes: <a href="http://imao.herokuapp.com/memes"> Memes_Home </a>-->
+  </div>
+</div><br><br>
+
+
+
+  
+
+
+
+</div>
+<br><br>
+
+
+
+</body>
+</html>

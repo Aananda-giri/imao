@@ -661,3 +661,6 @@ def list_jokes_api(request, no_of_jokes):
         return JsonResponse({'jokes':j2}, status=200)
     except ValueError as e:
         return Response(e.argss[0], status.HTTP_400_BAD_REQUEST)
+
+def api_view(request):
+    return render(request, 'jokes/api_template.html')

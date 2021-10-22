@@ -2,6 +2,45 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+
+<!-- For google analytics, different webmasters and bootstrap5 -->
+{% include "google_analytics.html" %}
+
+<!--Define keywords for search engines:-->
+<meta name="keywords" content=" api, jokes_api, joke, jokes, laugh, funny, comedy, comedian, {{jokes.0.title}}, {{jokes.0.title}}, tiktok_content ">
+
+<!-- Description for search engines -->
+<meta name="description"  content="Free api for more than 15,000 best Jokes from across the internet.'">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+<!-- For accesssing css in django-->
+{% load static %}
+<!-- For favicon icon -->
+<link rel="shortcut icon" type="image/png" href="{% static 'jokeleopedia/1apple-touch-icon.png' %}"/>
+
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'jokes/style_t2.css' %}">
+
+<!--   For bootstrap   -->
+<link rel="stylesheet" type="text/css" href="{% static 'jokes/bootstrap.min.css' %}">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<!--for google font Aladin:-->
+<link href='https://fonts.googleapis.com/css?family=Aladin' rel='stylesheet'>
+
+<script src="{% static 'jokes/template_1_script.js' %}"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'jokes/template_1_style.css' %}">
   <title>{% block title %}Django Auth Tutorial{% endblock %}</title>
 </head>
 <body>
