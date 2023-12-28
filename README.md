@@ -1,4 +1,4 @@
-# _This website is created to be the largest jokes database in the internet._<br>
+#  jokes database in the internet._<br>
 # _**also the largest collector of best memes ( over 100,000 best memes currently ) <br><br>**_
 
 >It is implemented using django.
